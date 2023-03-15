@@ -20,6 +20,11 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 {
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
+
+	screenCoords = minCoords;
+
+	block2 = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(1/6, 1/6) , &tilesheet, &program);
+	
 }
 
 TileMap::~TileMap()
@@ -38,6 +43,12 @@ void TileMap::render() const
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * nTiles);
 	glDisable(GL_TEXTURE_2D);
+
+	for (auto p : positionBlock)
+	{
+		block2->setPosition(glm::vec2(screenCoords.x + p[0] * tileSize, screenCoords.y + p[1] * tileSize));
+		block2->render();
+	}
 }
 
 void TileMap::free()
@@ -205,10 +216,6 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
-bool TileMap::checkColor(int pos_i, int pos_j) {
-	if (map[pos_j * mapSize.x + pos_i] == 1) return true;
-	else return false;
-}
 
 void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size, int* posY) {
 	int x0, x1, y;
@@ -218,16 +225,19 @@ void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size, int* po
 	y = (pos.y + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (map[y * mapSize.x + x] == 1)
+		if (*posY - tileSize * y + size.y <= 5)
 		{
-			if (*posY - tileSize * y + size.y <= 4)
+			if (map[y * mapSize.x + x] == 5)
 			{
 				map[y * mapSize.x + x] = 2;
-				//position.push_back(make_pair(x, y));
+				positionBlock.push_back(glm::ivec2(x, y));
 				--Nblock;
 			}
 		}
+		
+		
 	}
+	
 
 }
 

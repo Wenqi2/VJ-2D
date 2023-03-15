@@ -37,7 +37,6 @@ public:
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 
-	bool checkColor(int pos_i, int pos_j);
 	void changeColor(const glm::ivec2& pos, const glm::ivec2& size, int* posY);
 
 	
@@ -55,9 +54,10 @@ private:
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
-	//vector<pair<int, int>> position;
 	Sprite *block2;
 	int Nblock = 0;
+	glm::vec2 screenCoords;
+	vector<glm::ivec2> positionBlock;
 
 };
 

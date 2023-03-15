@@ -8,8 +8,9 @@
   Texture.cpp
   TileMap.cpp
   Generando código...
+  LINK : no se encontró E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(SOIL.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(stb_image_aug.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-  Night Knight.vcxproj -> E:\proj\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe
+  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe

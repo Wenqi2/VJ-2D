@@ -100,7 +100,7 @@ void Player::update(int deltaTime)
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
 			map->changeColor(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
-
+			map->render();
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
 				bJumping = true;
