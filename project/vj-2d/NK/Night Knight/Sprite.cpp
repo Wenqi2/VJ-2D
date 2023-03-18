@@ -31,7 +31,7 @@ Sprite::Sprite(const glm::vec2 &quadSize, const glm::vec2 &sizeInSpritesheet, Te
 	texture = spritesheet;
 	shaderProgram = program;
 	currentAnimation = -1;
-	position = glm::vec2(0.f);
+	position = glm::vec2(0.f,0.f);
 }
 
 void Sprite::update(int deltaTime)
@@ -103,7 +103,9 @@ int Sprite::animation() const
 
 void Sprite::setPosition(const glm::vec2 &pos)
 {
+
 	position = pos;
+
 }
 
 

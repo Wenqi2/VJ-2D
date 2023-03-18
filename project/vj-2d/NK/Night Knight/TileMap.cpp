@@ -5,7 +5,11 @@
 #include "TileMap.h"
 
 
+
+
+
 using namespace std;
+
 
 
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
@@ -20,11 +24,6 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 {
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
-
-	screenCoords = minCoords;
-
-	block2 = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(1/6, 1/6) , &tilesheet, &program);
-	
 }
 
 TileMap::~TileMap()
@@ -43,12 +42,6 @@ void TileMap::render() const
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * nTiles);
 	glDisable(GL_TEXTURE_2D);
-
-	for (auto p : positionBlock)
-	{
-		block2->setPosition(glm::vec2(screenCoords.x + p[0] * tileSize, screenCoords.y + p[1] * tileSize));
-		block2->render();
-	}
 }
 
 void TileMap::free()
@@ -96,6 +89,15 @@ bool TileMap::loadLevel(const string &levelFile)
 			fin.get(tile);
 			if(tile == ' ')
 				map[j*mapSize.x+i] = 0;
+			else if (tile == 's') {
+			  
+				Enemy e;
+				e.setPos(glm::vec2(i, j));
+				e.enemyType = 's';
+				enemies.push_back(e);
+				map[j * mapSize.x + i] = 0;
+			}
+
 			else
 				map[j*mapSize.x+i] = tile - int('0');
 		}
@@ -122,29 +124,37 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 		for(int i=0; i<mapSize.x; i++)
 		{
 			tile = map[j * mapSize.x + i];
-			if(tile != 0)
+			if (tile == -100) {
+				
+				map[j * mapSize.x + i] = 0;
+
+			}
+
+			else if(tile != 0)
 			{
-				// Non-empty tile
-				nTiles++;
-				posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize);
-				texCoordTile[0] = glm::vec2(float((tile-1)%tilesheetSize.x) / tilesheetSize.x, float((tile-1)/tilesheetSize.x) / tilesheetSize.y);
-				texCoordTile[1] = texCoordTile[0] + tileTexSize;
-				//texCoordTile[0] += halfTexel;
-				texCoordTile[1] -= halfTexel;
-				// First triangle
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y);
-				vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y);
-				vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[0].y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[1].y);
-				// Second triangle
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y);
-				vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);
-				vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[1].y);
-				vertices.push_back(posTile.x); vertices.push_back(posTile.y + blockSize);
-				vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[1].y);
+				
+					// Non-empty tile
+					nTiles++;
+					posTile = glm::vec2(minCoords.x + i * tileSize, minCoords.y + j * tileSize);
+					texCoordTile[0] = glm::vec2(float((tile - 1) % tilesheetSize.x) / tilesheetSize.x, float((tile - 1) / tilesheetSize.x) / tilesheetSize.y);
+					texCoordTile[1] = texCoordTile[0] + tileTexSize;
+					//texCoordTile[0] += halfTexel;
+					texCoordTile[1] -= halfTexel;
+					// First triangle
+					vertices.push_back(posTile.x); vertices.push_back(posTile.y);
+					vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);
+					vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y);
+					vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[0].y);
+					vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
+					vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[1].y);
+					// Second triangle
+					vertices.push_back(posTile.x); vertices.push_back(posTile.y);
+					vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[0].y);
+					vertices.push_back(posTile.x + blockSize); vertices.push_back(posTile.y + blockSize);
+					vertices.push_back(texCoordTile[1].x); vertices.push_back(texCoordTile[1].y);
+					vertices.push_back(posTile.x); vertices.push_back(posTile.y + blockSize);
+					vertices.push_back(texCoordTile[0].x); vertices.push_back(texCoordTile[1].y);
+				
 			}
 		}
 	}
@@ -214,31 +224,6 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	}
 	
 	return false;
-}
-
-
-void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size, int* posY) {
-	int x0, x1, y;
-
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = (pos.y + size.y - 1) / tileSize;
-	for (int x = x0; x <= x1; x++)
-	{
-		if (*posY - tileSize * y + size.y <= 5)
-		{
-			if (map[y * mapSize.x + x] == 5)
-			{
-				map[y * mapSize.x + x] = 2;
-				positionBlock.push_back(glm::ivec2(x, y));
-				--Nblock;
-			}
-		}
-		
-		
-	}
-	
-
 }
 
 

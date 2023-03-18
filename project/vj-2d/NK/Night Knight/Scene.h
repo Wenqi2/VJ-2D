@@ -3,9 +3,11 @@
 
 
 #include <glm/glm.hpp>
-#include "ShaderProgram.h"
-#include "TileMap.h"
-#include "Player.h"
+#include <vector>
+
+#include "Skeleton.h"
+
+
 
 
 // Scene contains all the entities of our game.
@@ -23,6 +25,8 @@ public:
 	void update(int deltaTime);
 	void render();
 
+	vector<Skeleton> skeletons;
+
 private:
 	void initShaders();
 
@@ -32,6 +36,7 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	
 
 };
 
