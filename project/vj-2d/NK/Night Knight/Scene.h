@@ -24,7 +24,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-
+	void update_map(int deltaTime);
 	vector<Skeleton> skeletons;
 
 private:
@@ -36,10 +36,16 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	Texture Blocsheet;
+	Texture Keysheet;
+	Texture Doorsheet;
+	Texture Fruitsheet;
+	Sprite* block2;
+	Sprite* key;
+	Sprite* door;
+	Sprite* Fruit;
+	bool Bkey = true;
 	
 
 };
-
-
-#endif // _SCENE_INCLUDE
 
