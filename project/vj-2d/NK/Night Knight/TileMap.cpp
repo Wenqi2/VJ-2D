@@ -23,8 +23,6 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 
 	screenCoords = minCoords;
 
-	block2 = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(1/6, 1/6) , &tilesheet, &program);
-	
 }
 
 TileMap::~TileMap()
@@ -32,6 +30,7 @@ TileMap::~TileMap()
 	if(map != NULL)
 		delete map;
 }
+
 
 
 void TileMap::render() const
@@ -44,11 +43,6 @@ void TileMap::render() const
 	glDrawArrays(GL_TRIANGLES, 0, 6 * nTiles);
 	glDisable(GL_TEXTURE_2D);
 
-	for (auto p : positionBlock)
-	{
-		block2->setPosition(glm::vec2(screenCoords.x + p[0] * tileSize, screenCoords.y + p[1] * tileSize));
-		block2->render();
-	}
 }
 
 void TileMap::free()
@@ -96,8 +90,14 @@ bool TileMap::loadLevel(const string &levelFile)
 			fin.get(tile);
 			if(tile == ' ')
 				map[j*mapSize.x+i] = 0;
-			else
-				map[j*mapSize.x+i] = tile - int('0');
+			else if (tile == 'k') {
+				key_pos = glm::vec2(i, j);
+				map[j * mapSize.x + i] = 0;
+			}
+			else {
+				map[j * mapSize.x + i] = tile - int('0');
+				++Nblock;
+			}
 		}
 		fin.get(tile);
 #ifndef _WIN32
@@ -158,6 +158,8 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 	texCoordLocation = program.bindVertexAttribute("texCoord", 2, 4*sizeof(float), (void *)(2*sizeof(float)));
 }
 
+
+
 // Collision tests for axis aligned bounding boxes.
 // Method collisionMoveDown also corrects Y coordinate if the box is
 // already intersecting a tile below.
@@ -217,7 +219,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 }
 
 
-void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size, int* posY) {
+void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x0, x1, y;
 
 	x0 = pos.x / tileSize;
@@ -225,20 +227,27 @@ void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size, int* po
 	y = (pos.y + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (*posY - tileSize * y + size.y <= 5)
-		{
-			if (map[y * mapSize.x + x] == 5)
+		cout << "hola1" << endl;
+			if (map[y * mapSize.x + x] != 0)
 			{
-				map[y * mapSize.x + x] = 2;
-				positionBlock.push_back(glm::ivec2(x, y));
-				--Nblock;
+				cout << "hola" << endl;
+					map[y * mapSize.x + x] = 2;
+					positionBlock.push_back(glm::ivec2(x, y));
+					--Nblock;
 			}
-		}
-		
-		
 	}
-	
 
+}
+
+
+
+vector<glm::ivec2> TileMap::getpositionBlock() {
+	return positionBlock;
+}
+
+glm::vec2 TileMap::getposKey()
+{
+	return key_pos;
 }
 
 

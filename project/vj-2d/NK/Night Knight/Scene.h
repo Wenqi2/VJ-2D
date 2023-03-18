@@ -21,6 +21,7 @@ public:
 
 	void init();
 	void update(int deltaTime);
+	void update_map(int deltaTime);
 	void render();
 
 private:
@@ -32,7 +33,15 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
-
+	Texture Blocsheet;
+	Texture Keysheet;
+	Texture Doorsheet;
+	Texture Fruitsheet;
+	Sprite* block2;
+	Sprite* key;
+	Sprite* door;
+	Sprite* Fruit;
+	bool Bkey = true;
 };
 
 
