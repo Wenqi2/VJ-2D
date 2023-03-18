@@ -1,8 +1,10 @@
+
 #include <iostream>
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
+
 
 
 #define SCREEN_X 32
@@ -27,11 +29,25 @@ Scene::~Scene()
 }
 
 
+
 void Scene::init()
 {
 	initShaders();
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	int tileSize = map->getTileSize();
+  
+  int len = map->enemies.size();
+	
+	for (int i = 0; i < len; ++i) {
+		
+		Skeleton skeleton = Skeleton();
+		skeleton.init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		skeleton.setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize()));
+		skeleton.setTileMap(map);
+		skeletons.push_back(skeleton);
+
+
+	}
 
 	Blocsheet.loadFromFile("images/Free/Terrain/bloc.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
@@ -69,16 +85,24 @@ void Scene::init()
 	currentTime = 0.0f;
 }
 
+
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	int len = skeletons.size();
+	for (int i = 0; i < len; ++i) {
+		skeletons[i].update(deltaTime);
+	}
+
 }
 
 void Scene::update_map(int deltaTime)
 {
 	map->render();
 }
+
+
 
 void Scene::render()
 {
@@ -92,8 +116,8 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
-
-	int tileSize = map->getTileSize();
+  
+  int tileSize = map->getTileSize();
 	
 	if (Bkey) {
 		key->setPosition(glm::vec2(SCREEN_X + map->getposKey().x * tileSize, SCREEN_Y + map->getposKey().y * tileSize));
@@ -105,8 +129,16 @@ void Scene::render()
 		block2->setPosition(glm::vec2(SCREEN_X + p[0] * tileSize, SCREEN_Y + p[1] * tileSize));
 		block2->render();
 	}
+  
+  
+	int len  = skeletons.size();
+	for (int i = 0; i < len; ++i) {
+		skeletons[i].render();
 
+	}
+	
 }
+
 
 void Scene::initShaders()
 {
@@ -137,6 +169,4 @@ void Scene::initShaders()
 	vShader.free();
 	fShader.free();
 }
-
-
 
