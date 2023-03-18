@@ -3,7 +3,11 @@
 #include <sstream>
 #include <vector>
 #include "TileMap.h"
+
 using namespace std;
+
+
+
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
 	TileMap *map = new TileMap(levelFile, minCoords, program);
@@ -16,11 +20,13 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 	prepareArrays(minCoords, program);
 	screenCoords = minCoords;
 }
+
 TileMap::~TileMap()
 {
 	if(map != NULL)
 		delete map;
 }
+
 void TileMap::render() const
 {
 	glEnable(GL_TEXTURE_2D);
@@ -67,26 +73,38 @@ bool TileMap::loadLevel(const string &levelFile)
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
   
-  else if (tile == 's') {	
-			  	
-				Enemy e;	
-				e.setPos(glm::vec2(i, j));	
-				e.enemyType = 's';	
-				enemies.push_back(e);	
-				map[j * mapSize.x + i] = 0;	
-			}	
-		
-		}
-    
-  else if (tile == 'k') {
+	
+	map = new int[mapSize.x * mapSize.y];
+
+	for (int j = 0; j < mapSize.y; j++)
+	{
+		for (int i = 0; i < mapSize.x; i++)
+		{
+			fin.get(tile);
+			if (tile == ' ')
+				map[j * mapSize.x + i] = 0;
+
+			else if (tile == 'k')
+			{
 				key_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
 			}
-	else {
+
+			else if (tile == 's') {
+
+				Enemy e;
+				e.setPos(glm::vec2(i, j));
+				e.enemyType = 's';
+				enemies.push_back(e);
+				map[j * mapSize.x + i] = 0;
+			}
+
+			else{
+			
 				map[j * mapSize.x + i] = tile - int('0');
 				++Nblock;
-	}
-  }
+			}
+		}
 		fin.get(tile);
 #ifndef _WIN32
 		fin.get(tile);
