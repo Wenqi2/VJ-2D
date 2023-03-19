@@ -8,8 +8,10 @@
 class Item {
 
 public:
-	void init();
+	void init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
+	void collisionItem(const glm::vec2& pos);
 	void render();
+	void update(int deltaTime);
 private:
 	Texture Keysheet;
 	Texture Doorsheet;
@@ -17,5 +19,13 @@ private:
 	Sprite* key;
 	Sprite* door;
 	Sprite* coin;
+	int SCREEN_X;
+	int SCREEN_Y;
+	bool Bkey;
+	bool Bcoin;
+	bool Bdoor;
+	glm::ivec2 tileMapDispl;
+	TileMap* map;
+};
 
 #endif

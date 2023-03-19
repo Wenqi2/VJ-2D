@@ -41,6 +41,7 @@ void TileMap::free()
 {
 	glDeleteBuffers(1, &vbo);
 }
+
 bool TileMap::loadLevel(const string &levelFile)
 {
 	ifstream fin;
@@ -90,7 +91,8 @@ bool TileMap::loadLevel(const string &levelFile)
 				map[j * mapSize.x + i] = 0;
 			}
 
-			else if (tile == 's') {
+			else if (tile == 's') 
+			{
 
 				Enemy e;
 				e.setPos(glm::vec2(i, j));
@@ -98,18 +100,18 @@ bool TileMap::loadLevel(const string &levelFile)
 				enemies.push_back(e);
 				map[j * mapSize.x + i] = 0;
 			}
-
-			else{
-			
-			else if (tile == 'c') {
+			else if (tile == 'c') 
+			{
 				Coin_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
 			}
-			else if (tile == 'd') {
+			else if (tile == 'd') 
+			{
 				Door_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
 			}
-			else {
+			else
+			{
 				map[j * mapSize.x + i] = tile - int('0');
 				++Nblock;
 			}
@@ -227,20 +229,12 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
-bool TileMap::collisionKey(const glm::ivec2& pos, const glm::ivec2& size) const
+bool TileMap::collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const
 {
-	int x, y0, y1;
 
-	x = pos.x  / tileSize;
-	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
-	for (int y = y0; y <= y1; y++)
-	{
-		if (x == key_pos.x and y == key_pos.y)
-			return true;
-	}
-
-	return false;
+	bool collisionX = posPlayer.x + sizePlayer.x >= posItem.x and posItem.x + sizePlayer.x >= posPlayer.x;
+	bool collisionY = posPlayer.y + sizePlayer.y >= posItem.y and posItem.y + sizePlayer.y >= posPlayer.y;
+	return collisionX && collisionY;
 }
 
 

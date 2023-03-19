@@ -48,8 +48,8 @@
     <ClInclude Include="Skeleton.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Iteam.h">
-      <Filter>Archivos de origen</Filter>
+    <ClInclude Include="Item.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

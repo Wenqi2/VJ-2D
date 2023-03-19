@@ -37,7 +37,7 @@ void Scene::init()
 	int tileSize = map->getTileSize();
   
 
-  int len = map->enemies.size();
+	int len = map->enemies.size();
 	
 	for (int i = 0; i < len; ++i) {
 		skeleton = new Skeleton();
@@ -56,7 +56,8 @@ void Scene::init()
 	block2->addKeyframe(0, glm::vec2(0.f, 0.f));
 	block2->changeAnimation(0);
 
-
+	item = new Item();
+	item -> init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -75,6 +76,9 @@ void Scene::update(int deltaTime)
 	for (int i = 0; i < len; ++i) {
 		skeletons[i]->update(deltaTime);
 	}
+	item->collisionItem(player->getposPlayer());
+	item->update(deltaTime);
+	
 
 }
 
@@ -99,13 +103,7 @@ void Scene::render()
 	player->render();
 	int tileSize = map->getTileSize();
 
-	coin->setPosition(glm::vec2(SCREEN_X + map->getposCoin().x * tileSize, SCREEN_Y + map->getposCoin().y * tileSize));
-	coin->render();
-
-	if (Bkey) {
-		key->setPosition(glm::vec2(SCREEN_X + map->getposKey().x * tileSize, SCREEN_Y + map->getposKey().y * tileSize));
-		key->render();
-	}
+	
 
 	vector<glm::ivec2> positionBlock = map ->getpositionBlock();
 	for (auto p : positionBlock)
@@ -123,16 +121,6 @@ void Scene::render()
 	}
 	
 	//if (map->getNblock() == 0) doorOpen = true;
-
-	if (doorOpen) {
-		door->changeAnimation(DOOR_OPEN);
-		door->setPosition(glm::vec2(SCREEN_X + map->getposDoor().x * tileSize, SCREEN_Y + map->getposDoor().y * tileSize));
-		door->render();
-	}
-	else {
-		door->setPosition(glm::vec2(SCREEN_X + map->getposDoor().x * tileSize, SCREEN_Y + map->getposDoor().y * tileSize));
-		door->render();
-	}
 
 }
 

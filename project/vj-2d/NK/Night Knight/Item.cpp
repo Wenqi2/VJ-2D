@@ -6,7 +6,7 @@
 #define DOOR_OPEN 1
 #define DOOR_CLOSE 0
 
-void Item::init()
+void Item::init(const glm::ivec2& tileMapPos, ShaderProgram &texProgram, TileMap* Tmap)
 {
 	Keysheet.loadFromFile("images/Free/Items/key/key-blue2.png", TEXTURE_PIXEL_FORMAT_RGB);
 
@@ -44,10 +44,42 @@ void Item::init()
 
 	door->setAnimationSpeed(DOOR_OPEN, 8);
 	door->addKeyframe(0, glm::vec2(0.f, 0.f));
-
 	door->changeAnimation(0);
+
+	SCREEN_X = tileMapPos.x;
+	SCREEN_Y = tileMapPos.y;
+	map = Tmap;
+}
+
+void Item::collisionItem(const glm::vec2& posPlayer)
+{
+	if (Bkey and map->collisionItem(posPlayer, glm::ivec2(32, 32), map->getposKey(), glm::ivec2(18, 18))) {
+		Bkey = not Bkey;
+		Bdoor = true;
+	}
+	if (Bdoor and map->collisionItem(posPlayer, glm::ivec2(32, 32), map->getposKey(), glm::ivec2(48, 96))) {
+		door->changeAnimation(DOOR_OPEN);
+	}
+	if (Bcoin and map->collisionItem(posPlayer, glm::ivec2(32, 32), map->getposKey(), glm::ivec2(18, 18))) {
+		Bcoin = false;
+	}
 }
 
 void Item::render()
 {
+
+
+}
+
+void Item::update(int deltaTime)
+{
+	coin->setPosition(glm::vec2(SCREEN_X + map->getposCoin().x * 18, SCREEN_Y + map->getposCoin().y * 18));
+	coin->update(deltaTime);
+
+	if (Bkey) {
+		key->setPosition(glm::vec2(SCREEN_X + map->getposKey().x * 18, SCREEN_Y + map->getposKey().y * 18));
+		key->update(deltaTime);
+	}
+	door->setPosition(glm::vec2(SCREEN_X + map->getposDoor().x * 48, SCREEN_Y + map->getposDoor().y * 96));
+	door->render();
 }

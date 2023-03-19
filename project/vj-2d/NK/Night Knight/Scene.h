@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Skeleton.h"
+#include "Item.h"
 
 
 
@@ -43,6 +44,7 @@ private:
 
 	Skeleton *skeleton;
 	vector <Skeleton*> skeletons;
+	Item* item;
 	
 
 	bool doorOpen = false;
