@@ -10,8 +10,8 @@ enum EnemyAnims
 
 void Skeleton::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram){
 
-	spritesheet.loadFromFile("images/Enemies/AngryPig/AngryPig.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(36, 30), glm::vec2(0.0, 0.0), &spritesheet, &shaderProgram);
+	spritesheet.loadFromFile("images/AngryPig.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(36, 30), glm::vec2(0.0625f, 0.5f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(2);
 
 	sprite->setAnimationSpeed(MOVE_LEFT, 16);

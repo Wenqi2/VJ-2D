@@ -25,7 +25,7 @@ public:
 	void update(int deltaTime);
 	void render();
 	void update_map(int deltaTime);
-	vector<Skeleton> skeletons;
+	
 
 private:
 	void initShaders();
@@ -45,6 +45,9 @@ private:
 	Sprite* door;
 	Sprite* Fruit;
 	bool Bkey = true;
+
+	Skeleton *skeleton;
+	vector <Skeleton*> skeletons;
 	
 
 };

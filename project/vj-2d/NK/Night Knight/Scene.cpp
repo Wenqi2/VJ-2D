@@ -36,14 +36,14 @@ void Scene::init()
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	int tileSize = map->getTileSize();
   
+
   int len = map->enemies.size();
 	
 	for (int i = 0; i < len; ++i) {
-		
-		Skeleton skeleton = Skeleton();
-		skeleton.init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		skeleton.setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize()));
-		skeleton.setTileMap(map);
+		skeleton = new Skeleton();
+		skeleton->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		skeleton->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize()));
+		skeleton->setTileMap(map);
 		skeletons.push_back(skeleton);
 
 
@@ -51,7 +51,7 @@ void Scene::init()
 
 	Blocsheet.loadFromFile("images/Free/Terrain/bloc.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
-	block2 = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(0.5, 0.5), &Blocsheet, &texProgram);
+	block2 = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(0.5f, 0.5f), &Blocsheet, &texProgram);
 	block2->setNumberAnimations(1);
 	block2->setAnimationSpeed(0, 8);
 	block2->addKeyframe(0, glm::vec2(0.f, 0.f));
@@ -60,21 +60,21 @@ void Scene::init()
 
 	Keysheet.loadFromFile("images/Free/Items/key/key-blue2.png", TEXTURE_PIXEL_FORMAT_RGB);
 
-	key = Sprite::createSprite(glm::ivec2(18, 18), glm::ivec2(0.833, 1.f), &Keysheet, &texProgram);
+	key = Sprite::createSprite(glm::ivec2(18, 18), glm::ivec2(0.833f, 1.f), &Keysheet, &texProgram);
 	key->setNumberAnimations(1);
 	key->setAnimationSpeed(0, 8);
 	key->addKeyframe(0, glm::vec2(0.f, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 2, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 3, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 4, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 5, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 6, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 7, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 8, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 9, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 10, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833 * 11, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 2, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 3, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 4, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 5, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 6, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 7, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 8, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 9, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 10, 0.f));
+	key->addKeyframe(0, glm::vec2(0.0833f * 11, 0.f));
 	
 
 	player = new Player();
@@ -92,7 +92,7 @@ void Scene::update(int deltaTime)
 	player->update(deltaTime);
 	int len = skeletons.size();
 	for (int i = 0; i < len; ++i) {
-		skeletons[i].update(deltaTime);
+		skeletons[i]->update(deltaTime);
 	}
 
 }
@@ -116,8 +116,7 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
-  
-  int tileSize = map->getTileSize();
+	int tileSize = map->getTileSize();
 	
 	if (Bkey) {
 		key->setPosition(glm::vec2(SCREEN_X + map->getposKey().x * tileSize, SCREEN_Y + map->getposKey().y * tileSize));
@@ -132,9 +131,9 @@ void Scene::render()
   
   
 	int len  = skeletons.size();
-	for (int i = 0; i < len; ++i) {
-		skeletons[i].render();
-
+	for (int i = 0; i < len; i++) {
+		skeletons[i]->render();
+		
 	}
 	
 }
