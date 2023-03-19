@@ -245,10 +245,8 @@ void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 	y = (pos.y + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		cout << "hola1" << endl;
 			if (map[y * mapSize.x + x] != 0)
 			{
-				cout << "hola" << endl;
 					map[y * mapSize.x + x] = 2;
 					positionBlock.push_back(glm::ivec2(x, y));
 					--Nblock;

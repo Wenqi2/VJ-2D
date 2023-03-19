@@ -101,9 +101,8 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
+	item->render();
 	int tileSize = map->getTileSize();
-
-	
 
 	vector<glm::ivec2> positionBlock = map ->getpositionBlock();
 	for (auto p : positionBlock)
