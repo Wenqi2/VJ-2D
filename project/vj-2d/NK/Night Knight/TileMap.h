@@ -36,11 +36,15 @@ public:
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
+	bool collisionKey(const glm::ivec2& pos, const glm::ivec2& size) const;
 
 	void changeColor(const glm::ivec2& pos, const glm::ivec2& size);
 
 	vector<glm::ivec2> getpositionBlock();
 	glm::vec2 getposKey();
+	glm::vec2 getposCoin();
+	glm::vec2 getposDoor();
+	int getNblock();
 
 private:
 	bool loadLevel(const string &levelFile);
@@ -57,10 +61,12 @@ private:
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
-	int Nblock = 0;
+	int Nblock ;
 	glm::vec2 screenCoords;
 	vector<glm::ivec2> positionBlock;
 	glm::vec2 key_pos;
+	glm::vec2 Coin_pos;
+	glm::vec2 Door_pos;
 
 };
 

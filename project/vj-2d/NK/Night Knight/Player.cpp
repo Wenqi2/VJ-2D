@@ -109,7 +109,9 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
-	
+	if (map->collisionKey(posPlayer, glm::ivec2(32, 32))) {
+		map->doorOpen();
+	}
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 

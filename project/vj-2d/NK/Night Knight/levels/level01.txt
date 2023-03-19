@@ -29,6 +29,6 @@ images/Free/Terrain/bloc.png -- Tilesheet
 33                                33
 33                                33
 33                                33
-33                                33
+33                          c     33
 333333333333333333333333333333333333
 

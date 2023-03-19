@@ -94,6 +94,14 @@ bool TileMap::loadLevel(const string &levelFile)
 				key_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
 			}
+			else if (tile == 'c') {
+				Coin_pos = glm::vec2(i, j);
+				map[j * mapSize.x + i] = 0;
+			}
+			else if (tile == 'd') {
+				Door_pos = glm::vec2(i, j);
+				map[j * mapSize.x + i] = 0;
+			}
 			else {
 				map[j * mapSize.x + i] = tile - int('0');
 				++Nblock;
@@ -218,6 +226,22 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
+bool TileMap::collisionKey(const glm::ivec2& pos, const glm::ivec2& size) const
+{
+	int x, y0, y1;
+
+	x = pos.x  / tileSize;
+	y0 = pos.y / tileSize;
+	y1 = (pos.y + size.y - 1) / tileSize;
+	for (int y = y0; y <= y1; y++)
+	{
+		if (x == key_pos.x and y == key_pos.y)
+			return true;
+	}
+
+	return false;
+}
+
 
 void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x0, x1, y;
@@ -248,6 +272,21 @@ vector<glm::ivec2> TileMap::getpositionBlock() {
 glm::vec2 TileMap::getposKey()
 {
 	return key_pos;
+}
+
+glm::vec2 TileMap::getposCoin()
+{
+	return Coin_pos;
+}
+
+glm::vec2 TileMap::getposDoor()
+{
+	return Door_pos;
+}
+
+int TileMap::getNblock()
+{
+	return Nblock;
 }
 
 

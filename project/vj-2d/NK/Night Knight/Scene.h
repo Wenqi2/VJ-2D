@@ -36,12 +36,13 @@ private:
 	Texture Blocsheet;
 	Texture Keysheet;
 	Texture Doorsheet;
-	Texture Fruitsheet;
+	Texture Coinsheet;
 	Sprite* block2;
 	Sprite* key;
 	Sprite* door;
-	Sprite* Fruit;
+	Sprite* coin;
 	bool Bkey = true;
+	bool doorOpen = false;
 };
 
 
