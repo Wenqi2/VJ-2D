@@ -23,7 +23,6 @@ public:
 	
 private:
 	bool bJumping;
-	int heart = 3;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;

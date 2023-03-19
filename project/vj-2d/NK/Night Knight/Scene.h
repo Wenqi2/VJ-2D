@@ -3,9 +3,11 @@
 
 
 #include <glm/glm.hpp>
-#include "ShaderProgram.h"
-#include "TileMap.h"
-#include "Player.h"
+#include <vector>
+
+#include "Skeleton.h"
+
+
 
 
 // Scene contains all the entities of our game.
@@ -21,8 +23,9 @@ public:
 
 	void init();
 	void update(int deltaTime);
-	void update_map(int deltaTime);
 	void render();
+	void update_map(int deltaTime);
+	
 
 private:
 	void initShaders();
@@ -42,9 +45,14 @@ private:
 	Sprite* door;
 	Sprite* coin;
 	bool Bkey = true;
+
+	Skeleton *skeleton;
+	vector <Skeleton*> skeletons;
+	
+
 	bool doorOpen = false;
 };
 
+#endif
 
-#endif // _SCENE_INCLUDE
 

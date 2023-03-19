@@ -4,8 +4,8 @@
 #include <vector>
 #include "TileMap.h"
 
-
 using namespace std;
+
 
 
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
@@ -14,15 +14,11 @@ TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoo
 	
 	return map;
 }
-
-
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
-
 	screenCoords = minCoords;
-
 }
 
 TileMap::~TileMap()
@@ -30,8 +26,6 @@ TileMap::~TileMap()
 	if(map != NULL)
 		delete map;
 }
-
-
 
 void TileMap::render() const
 {
@@ -42,14 +36,11 @@ void TileMap::render() const
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * nTiles);
 	glDisable(GL_TEXTURE_2D);
-
 }
-
 void TileMap::free()
 {
 	glDeleteBuffers(1, &vbo);
 }
-
 bool TileMap::loadLevel(const string &levelFile)
 {
 	ifstream fin;
@@ -81,19 +72,35 @@ bool TileMap::loadLevel(const string &levelFile)
 	sstream.str(line);
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
+  
 	
 	map = new int[mapSize.x * mapSize.y];
-	for(int j=0; j<mapSize.y; j++)
+
+	for (int j = 0; j < mapSize.y; j++)
 	{
-		for(int i=0; i<mapSize.x; i++)
+		for (int i = 0; i < mapSize.x; i++)
 		{
 			fin.get(tile);
-			if(tile == ' ')
-				map[j*mapSize.x+i] = 0;
-			else if (tile == 'k') {
+			if (tile == ' ')
+				map[j * mapSize.x + i] = 0;
+
+			else if (tile == 'k')
+			{
 				key_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
 			}
+
+			else if (tile == 's') {
+
+				Enemy e;
+				e.setPos(glm::vec2(i, j));
+				e.enemyType = 's';
+				enemies.push_back(e);
+				map[j * mapSize.x + i] = 0;
+			}
+
+			else{
+			
 			else if (tile == 'c') {
 				Coin_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
@@ -156,7 +163,6 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 			}
 		}
 	}
-
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 	glGenBuffers(1, &vbo);
@@ -166,12 +172,9 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 	texCoordLocation = program.bindVertexAttribute("texCoord", 2, 4*sizeof(float), (void *)(2*sizeof(float)));
 }
 
-
-
 // Collision tests for axis aligned bounding boxes.
 // Method collisionMoveDown also corrects Y coordinate if the box is
 // already intersecting a tile below.
-
 bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 	int x, y0, y1;
@@ -187,7 +190,6 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	
 	return false;
 }
-
 bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 	int x, y0, y1;
@@ -203,7 +205,6 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	
 	return false;
 }
-
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
 {
 	int x0, x1, y;
@@ -245,7 +246,6 @@ bool TileMap::collisionKey(const glm::ivec2& pos, const glm::ivec2& size) const
 
 void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x0, x1, y;
-
 	x0 = pos.x / tileSize;
 	x1 = (pos.x + size.x - 1) / tileSize;
 	y = (pos.y + size.y - 1) / tileSize;
@@ -260,15 +260,10 @@ void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 					--Nblock;
 			}
 	}
-
 }
-
-
-
 vector<glm::ivec2> TileMap::getpositionBlock() {
 	return positionBlock;
 }
-
 glm::vec2 TileMap::getposKey()
 {
 	return key_pos;
