@@ -37,13 +37,8 @@ private:
 	float currentTime;
 	glm::mat4 projection;
 	Texture Blocsheet;
-	Texture Keysheet;
-	Texture Doorsheet;
-	Texture Coinsheet;
 	Sprite* block2;
-	Sprite* key;
-	Sprite* door;
-	Sprite* coin;
+
 	bool Bkey = true;
 
 	Skeleton *skeleton;
