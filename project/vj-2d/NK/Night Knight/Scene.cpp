@@ -45,15 +45,13 @@ void Scene::init()
 		skeleton->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize()));
 		skeleton->setTileMap(map);
 		skeletons.push_back(skeleton);
-
-
 	}
 
-	Blocsheet.loadFromFile("images/Free/Terrain/bloc.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	Blocsheet.loadFromFile("images/bloc.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	block2 = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(0.5, 0.5), &Blocsheet, &texProgram);
 	block2->setNumberAnimations(1);
 	block2->setAnimationSpeed(0, 8);
-	block2->addKeyframe(0, glm::vec2(0.f, 0.5f));
+	block2->addKeyframe(0, glm::vec2(0.5f, 0.f));
 	block2->changeAnimation(0);
 
 	Trapsheet.loadFromFile("images/spike.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -63,8 +61,15 @@ void Scene::init()
 	trap->addKeyframe(0, glm::vec2(0.f, 0.f));
 	trap->changeAnimation(0);
 
-	item = new Item();
-	item -> init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
+	Backsheet.loadFromFile("images/back3.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	backgound = Sprite::createSprite(glm::ivec2(576, 464), glm::ivec2(1, 1), &Backsheet, &texProgram);
+	backgound->setNumberAnimations(1);
+	backgound->setAnimationSpeed(0, 8);
+	backgound->addKeyframe(0, glm::vec2(0.f, 0.f));
+	backgound->changeAnimation(0);
+
+	//item = new Item();
+	//item -> init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -84,10 +89,11 @@ void Scene::update(int deltaTime)
 		skeletons[i]->update(deltaTime);
 	}
 
-	if (map->getNblock() == 0) item->keyUP();
+	int i = map->getNblock(); //item->keyUP();
 
-	item->collisionItem(player->getposPlayer());
-	item->update(deltaTime);
+	//item->collisionItem(player->getposPlayer());
+	//item->update(deltaTime);
+
 	if (map->collisionTrap(player ->getposPlayer(), glm::ivec2(32, 32))) {
 		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	}
@@ -95,16 +101,16 @@ void Scene::update(int deltaTime)
 
 }
 
-void Scene::update_map(int deltaTime)
-{
-	map->render();
-}
+
 
 
 
 void Scene::render()
 {
 	glm::mat4 modelview;
+
+	backgound->setPosition(glm::vec2(32, 16));
+	backgound->render();
 
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
@@ -114,13 +120,12 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
-	item->render();
+	//item->render();
 	int tileSize = map->getTileSize();
 
 	vector<glm::ivec2> positionBlock = map ->getpositionBlock();
 	for (auto p : positionBlock)
 	{
-		block2->changeAnimation(0);
 		block2->setPosition(glm::vec2(SCREEN_X + p[0] * tileSize, SCREEN_Y + p[1] * tileSize));
 		block2->render();
 	}
@@ -133,11 +138,12 @@ void Scene::render()
 	}
   
   
-	int len  = skeletons.size();
-	for (int i = 0; i < len; i++) {
-		skeletons[i]->render();
-		
-	}
+	//int len  = skeletons.size();
+	//for (int i = 0; i < len; i++) {
+	//	skeletons[i]->render();
+	//	
+	//}
+
 	
 
 }

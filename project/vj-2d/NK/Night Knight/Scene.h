@@ -25,7 +25,6 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void update_map(int deltaTime);
 	
 
 private:
@@ -41,6 +40,8 @@ private:
 	Sprite* block2;
 	Texture Trapsheet;
 	Sprite* trap;
+	Texture Backsheet;
+	Sprite* backgound;
 
 	bool Bkey = true;
 

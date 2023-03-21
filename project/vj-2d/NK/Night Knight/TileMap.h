@@ -69,7 +69,7 @@ private:
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
-	int Nblock ;
+	int Nblock = 0;
 	glm::vec2 screenCoords;
 	vector<glm::ivec2> positionBlock;
 	vector<glm::vec2> positionTrap;

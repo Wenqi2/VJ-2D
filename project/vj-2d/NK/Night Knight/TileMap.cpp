@@ -117,7 +117,9 @@ bool TileMap::loadLevel(const string &levelFile)
 			}
 			else
 			{	
-				if (tile == '1') ++Nblock;
+				if (tile == '1') {
+					++Nblock;
+				}
 				map[j * mapSize.x + i] = tile - int('0');
 				
 			}
