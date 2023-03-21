@@ -12,6 +12,7 @@ public:
 	void collisionItem(const glm::vec2& pos);
 	void render();
 	void update(int deltaTime);
+	void keyUP();
 private:
 	Texture Keysheet;
 	Texture Doorsheet;
@@ -21,9 +22,9 @@ private:
 	Sprite* coin;
 	int SCREEN_X;
 	int SCREEN_Y;
-	bool Bkey;
-	bool Bcoin;
-	bool Bdoor;
+	bool Bkey = true;
+	bool Bcoin = true;
+	bool Bdoor = false;
 	glm::ivec2 tileMapDispl;
 	TileMap* map;
 };

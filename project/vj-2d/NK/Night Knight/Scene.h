@@ -39,6 +39,8 @@ private:
 	glm::mat4 projection;
 	Texture Blocsheet;
 	Sprite* block2;
+	Texture Trapsheet;
+	Sprite* trap;
 
 	bool Bkey = true;
 

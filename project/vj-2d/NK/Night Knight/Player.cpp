@@ -95,6 +95,7 @@ void Player::update(int deltaTime)
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 		}
 	}
+
 	else
 	{
 		posPlayer.y += FALL_STEP;

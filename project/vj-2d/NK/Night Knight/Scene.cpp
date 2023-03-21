@@ -53,8 +53,15 @@ void Scene::init()
 	block2 = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(0.5, 0.5), &Blocsheet, &texProgram);
 	block2->setNumberAnimations(1);
 	block2->setAnimationSpeed(0, 8);
-	block2->addKeyframe(0, glm::vec2(0.f, 0.f));
+	block2->addKeyframe(0, glm::vec2(0.f, 0.5f));
 	block2->changeAnimation(0);
+
+	Trapsheet.loadFromFile("images/spike.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	trap = Sprite::createSprite(glm::ivec2(tileSize, tileSize), glm::ivec2(1, 1), &Trapsheet, &texProgram);
+	trap->setNumberAnimations(1);
+	trap->setAnimationSpeed(0, 8);
+	trap->addKeyframe(0, glm::vec2(0.f, 0.f));
+	trap->changeAnimation(0);
 
 	item = new Item();
 	item -> init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
@@ -76,8 +83,14 @@ void Scene::update(int deltaTime)
 	for (int i = 0; i < len; ++i) {
 		skeletons[i]->update(deltaTime);
 	}
+
+	if (map->getNblock() == 0) item->keyUP();
+
 	item->collisionItem(player->getposPlayer());
 	item->update(deltaTime);
+	if (map->collisionTrap(player ->getposPlayer(), glm::ivec2(32, 32))) {
+		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	}
 	
 
 }
@@ -111,6 +124,13 @@ void Scene::render()
 		block2->setPosition(glm::vec2(SCREEN_X + p[0] * tileSize, SCREEN_Y + p[1] * tileSize));
 		block2->render();
 	}
+
+	vector<glm::vec2> positionTrap = map->getpositionTrap();
+	for (auto p : positionTrap)
+	{
+		trap->setPosition(glm::vec2(SCREEN_X + p.x * tileSize, SCREEN_Y + p.y * tileSize));
+		trap->render();
+	}
   
   
 	int len  = skeletons.size();
@@ -119,7 +139,6 @@ void Scene::render()
 		
 	}
 	
-	//if (map->getNblock() == 0) doorOpen = true;
 
 }
 

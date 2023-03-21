@@ -110,10 +110,16 @@ bool TileMap::loadLevel(const string &levelFile)
 				Door_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
 			}
-			else
+			else if (tile == 't')
 			{
+				positionTrap.push_back(glm::ivec2(i, j));
+				map[j * mapSize.x + i] = 0;
+			}
+			else
+			{	
+				if (tile == '1') ++Nblock;
 				map[j * mapSize.x + i] = tile - int('0');
-				++Nblock;
+				
 			}
 		}
 		fin.get(tile);
@@ -232,8 +238,8 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 bool TileMap::collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const
 {
 
-	bool collisionX = posPlayer.x + sizePlayer.x >= posItem.x and posItem.x + sizePlayer.x >= posPlayer.x;
-	bool collisionY = posPlayer.y + sizePlayer.y >= posItem.y and posItem.y + sizePlayer.y >= posPlayer.y;
+	bool collisionX = posPlayer.x  >= posItem.x * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x;
+	bool collisionY = posPlayer.y + sizePlayer.y >= posItem.y * tileSize and posItem.y * tileSize + sizeIteam.y >= posPlayer.y + sizePlayer.y;
 	return collisionX && collisionY;
 }
 
@@ -253,8 +259,25 @@ void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 			}
 	}
 }
+
+bool TileMap::collisionTrap(const glm::ivec2& pos, const glm::ivec2& size) {
+
+		for (auto trap : positionTrap) {
+			if ((pos.y + size.y  >= trap.y * tileSize + 14 and trap.y * tileSize + 16 >= pos.y + size.y ) and (pos.x >= trap.x * tileSize and trap.x* tileSize + 16 >= pos.x))
+			{
+				return true;
+			}
+		}
+
+	return false;
+}
+
 vector<glm::ivec2> TileMap::getpositionBlock() {
 	return positionBlock;
+}
+vector<glm::vec2> TileMap::getpositionTrap()
+{
+	return positionTrap;
 }
 glm::vec2 TileMap::getposKey()
 {
