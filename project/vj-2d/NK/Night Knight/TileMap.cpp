@@ -243,7 +243,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 bool TileMap::collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const
 {
 
-	bool collisionX = posPlayer.x + sizePlayer.x >= posItem.x * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x + sizePlayer.x;
+	bool collisionX = (posPlayer.x + sizePlayer.x >= posItem.x * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x + sizePlayer.x) or (posPlayer.x >= posItem.x * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x);
 	bool collisionY = posPlayer.y + sizePlayer.y >= posItem.y * tileSize and posItem.y * tileSize + sizeIteam.y >= posPlayer.y + sizePlayer.y;
 	return collisionX && collisionY;
 }

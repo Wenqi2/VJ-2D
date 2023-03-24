@@ -1,10 +1,4 @@
-﻿  Game.cpp
-  Player.cpp
-  Scene.cpp
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(125,20): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(146,19): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-  main.cpp
-  Generando código...
+﻿  TileMap.cpp
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(SOIL.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
