@@ -8,18 +8,17 @@
 class Item {
 
 public:
-	void init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
-	void collisionItem(const glm::vec2& pos);
+	void key_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
+	void hourglass_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
+	void coin_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
+	bool collisionItem(const glm::vec2& pos);
 	void render();
 	void update(int deltaTime);
 	void keyUP();
 private:
-	Texture Keysheet;
-	Texture Doorsheet;
-	Texture Coinsheet;
-	Sprite* key;
-	Sprite* door;
-	Sprite* coin;
+	Texture Spritesheet;
+	Sprite* sprite;
+
 	int SCREEN_X;
 	int SCREEN_Y;
 	bool Bkey = true;
@@ -27,6 +26,8 @@ private:
 	bool Bdoor = false;
 	glm::ivec2 tileMapDispl;
 	TileMap* map;
+	glm::vec2 sizeItem;
+	glm::vec2 posItem;
 };
 
 #endif

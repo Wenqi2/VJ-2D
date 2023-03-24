@@ -43,14 +43,23 @@ private:
 	Texture Backsheet;
 	Sprite* backgound;
 
-	bool Bkey = true;
+	Texture Doorsheet;
+	Sprite* door;
+
+	bool keyUP = false;
+	bool keyGet = false;
+	bool coinGet = false;
+	bool hourglassGet = false;
+
 
 	Skeleton *skeleton;
 	vector <Skeleton*> skeletons;
-	Item* item;
+	Item* coin;
+	Item* key;
+	Item* hourglass;
+	vector<Item*> items;
+	int actual_time = 0;
 	
-
-	bool doorOpen = false;
 };
 
 #endif

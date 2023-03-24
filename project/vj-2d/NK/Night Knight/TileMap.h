@@ -44,7 +44,7 @@ public:
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	bool collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const;
-	bool collisionTrap(const glm::ivec2& pos, const glm::ivec2& size);
+	bool collisionTrap(const glm::ivec2& pos, const glm::vec2& size);
 
 	void changeColor(const glm::ivec2& pos, const glm::ivec2& size);
 	vector<glm::ivec2> getpositionBlock();
@@ -52,6 +52,7 @@ public:
 	glm::vec2 getposKey();
 	glm::vec2 getposCoin();
 	glm::vec2 getposDoor();
+	glm::vec2 getposHourglass();
 	int getNblock();
 	vector<Enemy> enemies;
 
@@ -76,6 +77,7 @@ private:
 	glm::vec2 key_pos;
 	glm::vec2 Coin_pos;
 	glm::vec2 Door_pos;
+	glm::vec2 Hourglass_pos;
 
 };
 #endif // _TILE_MAP_INCLUDE

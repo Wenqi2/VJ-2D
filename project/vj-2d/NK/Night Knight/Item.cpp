@@ -6,87 +6,89 @@
 #define DOOR_OPEN 1
 #define DOOR_CLOSE 0
 
-void Item::init(const glm::ivec2& tileMapPos, ShaderProgram &texProgram, TileMap* Tmap)
+void Item::key_init(const glm::ivec2& tileMapPos, ShaderProgram &texProgram, TileMap* Tmap)
 {
-	Keysheet.loadFromFile("images/key-blue.png", TEXTURE_PIXEL_FORMAT_RGB);
-
-	key = Sprite::createSprite(glm::ivec2(16, 16), glm::ivec2(0.0833f, 1.f), &Keysheet, &texProgram);
-	key->setNumberAnimations(1);
-	key->setAnimationSpeed(0, 8);
-	key->addKeyframe(0, glm::vec2(0.f, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 2, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 3, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 4, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 5, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 6, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 7, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 8, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 9, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 10, 0.f));
-	key->addKeyframe(0, glm::vec2(0.0833f * 11, 0.f));
-	key->changeAnimation(0);
-
-	//Coinsheet.loadFromFile("images/Coin.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	//coin = Sprite::createSprite(glm::ivec2(16, 16), glm::ivec2(0.25, 1), &Coinsheet, &texProgram);
-	//coin->setNumberAnimations(1);
-	//coin->setAnimationSpeed(0, 8);
-	//coin->addKeyframe(0, glm::vec2(0.f, 0.f));
-	//coin->addKeyframe(0, glm::vec2(0.25f, 0.f));
-	//coin->addKeyframe(0, glm::vec2(0.5f, 0.f));
-	//coin->addKeyframe(0, glm::vec2(0.75f, 0.f));
-	//coin->changeAnimation(0);
-
-	Doorsheet.loadFromFile("images/door.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	door = Sprite::createSprite(glm::ivec2(32, 32), glm::ivec2(1, 0.5), &Doorsheet, &texProgram);
-	door->setNumberAnimations(1);
-	door->setAnimationSpeed(DOOR_CLOSE, 8);
-	door->addKeyframe(0, glm::vec2(0.f, 0.f));
-	
-	/*door->setAnimationSpeed(DOOR_OPEN, 8);
-	door->addKeyframe(0, glm::vec2(0.f, 0.5f));*/
-	door->changeAnimation(0);
-
-	SCREEN_X = tileMapPos.x;
-	SCREEN_Y = tileMapPos.y;
 	map = Tmap;
+	posItem = map->getposKey();
+	Spritesheet.loadFromFile("images/key-blue.png", TEXTURE_PIXEL_FORMAT_RGBA);
+
+	sprite = Sprite::createSprite(glm::ivec2(22, 16), glm::vec2(0.0833f, 1.f), &Spritesheet, &texProgram);
+	sprite->setNumberAnimations(1);
+	sprite->setAnimationSpeed(0, 8);
+	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 2, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 3, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 4, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 5, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 6, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 7, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 8, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 9, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 10, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.0833f * 11, 0.f));
+	sprite->changeAnimation(0);
+
+	int tilesize = map->getTileSize();
+	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposKey().x * tilesize, tileMapPos.y + map->getposKey().y * tilesize));
+	sizeItem = glm::vec2(22, 16);
+
 }
 
-void Item::collisionItem(const glm::vec2& posPlayer)
-{	
-	if (Bkey and map->collisionItem(posPlayer, glm::ivec2(32, 32), map->getposKey(), glm::ivec2(16, 16))) {
-		Bkey = false;
-		Bdoor = true;
-		//door->changeAnimation(DOOR_OPEN);
-	}
-	if (Bdoor and map->collisionItem(posPlayer, glm::ivec2(32, 32), map->getposKey(), glm::ivec2(32, 32))) {
-		
-	}
-	if (Bcoin and map->collisionItem(posPlayer, glm::ivec2(32, 32), map->getposKey(), glm::ivec2(16, 16))) {
-		Bcoin = false;
-	}
+void Item::hourglass_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* Tmap)
+{
+	sizeItem = glm::vec2(16, 21);
+	map = Tmap;
+	posItem = map->getposHourglass();
+
+	Spritesheet.loadFromFile("images/hourglass.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(16, 21), glm::vec2(1, 1), &Spritesheet, &texProgram);
+
+	int tilesize = map->getTileSize();
+	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposHourglass().x * tilesize, tileMapPos.y + map->getposHourglass().y * tilesize));
+
+
+}
+
+void Item::coin_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* Tmap)
+{
+	map = Tmap;
+	int tilesize = map->getTileSize();
+	sizeItem = glm::vec2(tilesize, tilesize);
+	posItem = map->getposCoin();
+
+	Spritesheet.loadFromFile("images/Coin.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25, 1), &Spritesheet, &texProgram);
+	sprite->setNumberAnimations(1);
+	sprite->setAnimationSpeed(0, 8);
+	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.25f, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.5f, 0.f));
+	sprite->addKeyframe(0, glm::vec2(0.75f, 0.f));
+	sprite->changeAnimation(0);
+
+
+	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposCoin().x * tilesize, tileMapPos.y + map->getposCoin().y * tilesize));
 	
+}
+
+bool Item::collisionItem(const glm::vec2& posPlayer)
+{	
+	return map->collisionItem(posPlayer, glm::ivec2(32, 32), posItem, sizeItem); 
+
 }
 
 void Item::render()
 {
-	int tilesize = map->getTileSize();
-	door->setPosition(glm::vec2(SCREEN_X + map->getposDoor().x * tilesize, SCREEN_Y + map->getposDoor().y * tilesize));
-	door->render();
-	//coin->setPosition(glm::vec2(SCREEN_X + map->getposCoin().x * tilesize, SCREEN_Y + map->getposCoin().y * tilesize));
-	//coin->render();
+	sprite->render();
+
 }
 
 void Item::update(int deltaTime)
 {
-	if (Bcoin) {
-		coin->update(deltaTime);
-	}
-
-	key->update(deltaTime);
-	
-	door->render();
+	sprite->update(deltaTime);
 }
+
 
 void Item::keyUP()
 {

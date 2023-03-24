@@ -115,11 +115,14 @@ bool TileMap::loadLevel(const string &levelFile)
 				positionTrap.push_back(glm::ivec2(i, j));
 				map[j * mapSize.x + i] = 0;
 			}
+			else if (tile == 'h')
+			{
+				Hourglass_pos = glm::vec2(i, j);
+				map[j * mapSize.x + i] = 0;
+			}
 			else
 			{	
-				if (tile == '1') {
-					++Nblock;
-				}
+				if (tile == '1') ++Nblock;
 				map[j * mapSize.x + i] = tile - int('0');
 				
 			}
@@ -240,7 +243,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 bool TileMap::collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const
 {
 
-	bool collisionX = posPlayer.x  >= posItem.x * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x;
+	bool collisionX = posPlayer.x + sizePlayer.x >= posItem.x * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x + sizePlayer.x;
 	bool collisionY = posPlayer.y + sizePlayer.y >= posItem.y * tileSize and posItem.y * tileSize + sizeIteam.y >= posPlayer.y + sizePlayer.y;
 	return collisionX && collisionY;
 }
@@ -253,7 +256,7 @@ void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 	y = (pos.y + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-			if (map[y * mapSize.x + x] != 0)
+			if (map[y * mapSize.x + x] == 1)
 			{
 					map[y * mapSize.x + x] = 2;
 					positionBlock.push_back(glm::ivec2(x, y));
@@ -262,7 +265,7 @@ void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 	}
 }
 
-bool TileMap::collisionTrap(const glm::ivec2& pos, const glm::ivec2& size) {
+bool TileMap::collisionTrap(const glm::ivec2& pos, const glm::vec2& size) {
 
 		for (auto trap : positionTrap) {
 			if ((pos.y + size.y  >= trap.y * tileSize + 14 and trap.y * tileSize + 16 >= pos.y + size.y ) and (pos.x >= trap.x * tileSize and trap.x* tileSize + 16 >= pos.x))
@@ -294,6 +297,11 @@ glm::vec2 TileMap::getposCoin()
 glm::vec2 TileMap::getposDoor()
 {
 	return Door_pos;
+}
+
+glm::vec2 TileMap::getposHourglass()
+{
+	return Hourglass_pos;
 }
 
 int TileMap::getNblock()
