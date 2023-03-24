@@ -45,7 +45,7 @@ void Item::hourglass_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgra
 	sprite = Sprite::createSprite(glm::ivec2(16, 21), glm::vec2(1, 1), &Spritesheet, &texProgram);
 
 	int tilesize = map->getTileSize();
-	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposHourglass().x * tilesize, tileMapPos.y + map->getposHourglass().y * tilesize));
+	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposHourglass().x * tilesize, tileMapPos.y + map->getposHourglass().y * tilesize - 4));
 
 
 }

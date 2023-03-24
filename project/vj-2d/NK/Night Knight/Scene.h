@@ -48,7 +48,9 @@ private:
 
 	bool keyUP = false;
 	bool keyGet = false;
+	bool coinUP = false;
 	bool coinGet = false;
+	bool hourglassUP = false;
 	bool hourglassGet = false;
 
 

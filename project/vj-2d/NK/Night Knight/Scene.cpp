@@ -109,7 +109,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	int len = skeletons.size();
-	if (hourglassGet and currentTime - actual_time <= 3000) {
+	if (hourglassGet and currentTime - actual_time <= 2000) {
 
 	}
 	else {
@@ -126,7 +126,7 @@ void Scene::update(int deltaTime)
 		switch (i)
 		{
 		case 0:
-			if (items[0]->collisionItem(player->getposPlayer()) and not coinGet) {
+			if (items[0]->collisionItem(player->getposPlayer()) && not coinGet && coinUP) {
 				coinGet = true;
 			}
 			items[0]->update(deltaTime);
@@ -141,7 +141,7 @@ void Scene::update(int deltaTime)
 			items[1]->update(deltaTime);
 
 		case 2:
-			if (items[2]->collisionItem(player->getposPlayer()) and not hourglassGet) {
+			if (items[2]->collisionItem(player->getposPlayer()) && not hourglassGet && hourglassUP) {
 				hourglassGet = true;
 				actual_time = currentTime;
 			}
@@ -181,12 +181,14 @@ void Scene::render()
 			keyUP = true;
 		}
 	}
-	if (currentTime >= 5000 and not coinGet) { // Coin
+	if (currentTime >= 3000 and not coinGet) { // Coin
 		items[0]->render();
+		coinUP = true;
 	}
 
-	if (currentTime >= 6000 and not hourglassGet) { // Hourglass
+	if (currentTime >= 4000 and not hourglassGet) { // Hourglass
 		items[2]->render();
+		hourglassUP = true;
 	}
 	player->render();
 	int tileSize = map->getTileSize();
