@@ -36,6 +36,26 @@ void Item::key_init(const glm::ivec2& tileMapPos, ShaderProgram &texProgram, Til
 
 }
 
+void Item::door_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* Tmap)
+{
+	map = Tmap;
+	posItem = map->getposDoor();
+	sizeItem = glm::vec2(32, 32);
+
+	Spritesheet.loadFromFile("images/door.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1, 0.5), &Spritesheet, &texProgram);
+	sprite->setNumberAnimations(2);
+	sprite->setAnimationSpeed(DOOR_CLOSE, 8);
+	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
+
+	sprite->setAnimationSpeed(DOOR_OPEN, 8);
+	sprite->addKeyframe(0, glm::vec2(0.f, 0.5f));
+	sprite->changeAnimation(DOOR_CLOSE);
+
+	int tilesize = map->getTileSize();
+	sprite->setPosition(glm::vec2(SCREEN_X + posItem.x * tilesize, SCREEN_Y + posItem.y * tilesize));
+}
+
 void Item::hourglass_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* Tmap)
 {
 	sizeItem = glm::vec2(16, 20);
@@ -107,4 +127,9 @@ void Item::update(int deltaTime)
 void Item::keyUP()
 {
 	Bkey = true;
+}
+
+void Item::doorOpen()
+{
+	sprite->changeAnimation(1);
 }

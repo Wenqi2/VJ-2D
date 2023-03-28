@@ -62,6 +62,7 @@ private:
 	Item* key;
 	Item* hourglass;
 	Item* clock;
+	Item* door;
 	vector<Item*> items;
 	int actual_time = 0;
 	

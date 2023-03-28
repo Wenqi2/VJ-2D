@@ -71,6 +71,8 @@ void Scene::init()
 	backgound->addKeyframe(0, glm::vec2(0.f, 0.f));
 	backgound->changeAnimation(0);
 
+	door = new Item();
+	door -> door_init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	coin = new Item();
 	coin -> coin_init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	key = new Item();
@@ -83,19 +85,6 @@ void Scene::init()
 	items.push_back(key);
 	items.push_back(hourglass);
 	items.push_back(clock);
-
-	Doorsheet.loadFromFile("images/door.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	door = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1, 0.5), &Doorsheet, &texProgram);
-	door->setNumberAnimations(2);
-	door->setAnimationSpeed(DOOR_CLOSE, 8);
-	door->addKeyframe(0, glm::vec2(0.f, 0.f));
-
-	door->setAnimationSpeed(DOOR_OPEN, 8);
-	door->addKeyframe(0, glm::vec2(0.f, 0.5f));
-	door->changeAnimation(DOOR_CLOSE);
-
-	int tilesize = map->getTileSize();
-	door->setPosition(glm::vec2(SCREEN_X + map->getposDoor().x * tilesize, SCREEN_Y + map->getposDoor().y * tilesize));
 
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -138,8 +127,6 @@ void Scene::update(int deltaTime)
 			
 			if (items[1]->collisionItem(player->getposPlayer()) && keyUP && not keyGet) {
 				keyGet = true;
-				//door->changeAnimation(1);
-				//door->update(deltaTime);
 				doorOpen = true;
 			}
 			items[1]->update(deltaTime);
@@ -161,6 +148,8 @@ void Scene::update(int deltaTime)
 			break;
 		}
 	}
+			items[3]->update(deltaTime);
+			door->update(deltaTime);
 
 	
 

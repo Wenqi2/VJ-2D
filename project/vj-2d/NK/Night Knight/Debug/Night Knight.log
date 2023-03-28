@@ -1,6 +1,24 @@
-﻿  Item.cpp
-SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(SOIL.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(stb_image_aug.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe
+﻿  Game.cpp
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(65,8): error C2371: 'Scene::door': nueva definición; tipos básicos distintos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(47,10): message : vea la declaración de 'Scene::door'
+  Item.cpp
+  Player.cpp
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(65,8): error C2371: 'Scene::door': nueva definición; tipos básicos distintos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(47,10): message : vea la declaración de 'Scene::door'
+  Scene.cpp
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(65,8): error C2371: 'Scene::door': nueva definición; tipos básicos distintos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(47,10): message : vea la declaración de 'Scene::door'
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(117,20): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(137,19): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Skeleton.cpp
+E:\proj4\project\vj-2d\NK\Night Knight\Skeleton.cpp(63,31): warning C4244: '+=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+E:\proj4\project\vj-2d\NK\Night Knight\Skeleton.cpp(135,11): error C2039: "collisionEnemy": no es un miembro de "TileMap"
+E:\proj4\project\vj-2d\NK\Night Knight\TileMap.h(32,7): message : vea la declaración de 'TileMap'
+  main.cpp
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(65,8): error C2371: 'Scene::door': nueva definición; tipos básicos distintos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.h(47,10): message : vea la declaración de 'Scene::door'
+  Generando código...

@@ -9,6 +9,7 @@ class Item {
 
 public:
 	void key_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
+	void door_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
 	void hourglass_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
 	void coin_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
 	void clock_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map);
@@ -16,6 +17,8 @@ public:
 	void render();
 	void update(int deltaTime);
 	void keyUP();
+	void doorOpen();
+
 private:
 	Texture Spritesheet;
 	Sprite* sprite;
