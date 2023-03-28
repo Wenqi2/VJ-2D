@@ -1,7 +1,4 @@
-#include <iostream>
 #include "Skeleton.h"
-
-
 
 enum EnemyAnims
 {
@@ -9,6 +6,8 @@ enum EnemyAnims
 };
 
 void Skeleton::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram){
+
+
 
 	spritesheet.loadFromFile("images/AngryPig.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(36, 30), glm::vec2(0.0625f, 0.5f), &spritesheet, &shaderProgram);
@@ -59,22 +58,49 @@ void Skeleton::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram){
 }
 void Skeleton::update(int deltaTime)
 {
+	
 	sprite->update(deltaTime);
+	if (!grounded) posEnemy.y += 1.f;
+
+	if (!grounded && map->collisionMoveDown(posEnemy, glm::ivec2(36, 30), &posEnemy.y)) {
+		grounded = true;
+	}
+
 	if (facing) {
+		glm::vec2 temp = posEnemy;
 		posEnemy.x += 1;
+		temp.x += 30.f;
+		temp.y += 1.f;
+
+		if (grounded && !map->collisionMoveDown(temp, glm::ivec2(36, 30), &posEnemy.y)) {
+			posEnemy.x -= 1;
+			facing = !facing;
+		}
+		
 		if (map->collisionMoveRight(posEnemy, glm::ivec2(36, 30))) {
 			posEnemy.x -= 1;
 			sprite->changeAnimation(MOVE_LEFT);
 			facing = !facing;
 		}
-		else if (sprite->animation() != MOVE_RIGHT)
-				sprite->changeAnimation(MOVE_RIGHT);
-			
 
+		else if (sprite->animation() != MOVE_RIGHT)
+			sprite->changeAnimation(MOVE_RIGHT);
 	}
 
 	else {
+		glm::vec2 temp = posEnemy;
 		posEnemy.x -= 1;
+		temp.x -= 30.f;
+		temp.y += 1.f;
+
+		
+		if (grounded && !map->collisionMoveDown(temp, glm::ivec2(36, 30), &posEnemy.y)) {
+
+			posEnemy.x += 1;
+			facing = !facing;
+		}
+	
+
 		if (map->collisionMoveLeft(posEnemy, glm::ivec2(36, 30))) {
 			posEnemy.x += 1;
 			sprite->changeAnimation(MOVE_RIGHT);
@@ -82,6 +108,7 @@ void Skeleton::update(int deltaTime)
 		}
 		else if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
+
 		
 	}
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
@@ -101,4 +128,14 @@ void Skeleton::setPosition(const glm::vec2 &pos)
 {
 	posEnemy = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posEnemy.x), float(tileMapDispl.y + posEnemy.y)));
+}
+
+bool Skeleton::isColliding(glm::vec2 posPlayer) {
+	
+	if (map->collisionEnemy(posPlayer, glm::ivec2(14,28), (posEnemy/16), glm::ivec2(36,28))) {	
+		return true;
+	}
+	return false;
+
+
 }
