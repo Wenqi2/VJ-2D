@@ -43,11 +43,27 @@ void Scene::init()
 	int len = map->enemies.size();
 	
 	for (int i = 0; i < len; ++i) {
-		skeleton = new Skeleton();
-		skeleton->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		skeleton->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize()));
-		skeleton->setTileMap(map);
-		skeletons.push_back(skeleton);
+		if (map->enemies[i].enemyType == 's') {
+			skeleton = new Skeleton();
+			skeleton->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			skeleton->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize() - 11));
+			skeleton->setTileMap(map);
+			skeletons.push_back(skeleton);
+		}
+		else if (map->enemies[i].enemyType == 'v') {
+			vampire = new Vampire();
+			vampire->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			vampire->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize() - 18));
+			vampire->setTileMap(map);
+			vampires.push_back(vampire);
+		}
+		else if (map->enemies[i].enemyType == 'g') {
+			ghost = new Ghost();
+			ghost->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			ghost->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize() - 18));
+			ghost->setTileMap(map);
+			ghosts.push_back(ghost);
+		}
 	}
 
 	Blocsheet.loadFromFile("images/bloc.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -105,9 +121,29 @@ void Scene::update(int deltaTime)
 
 	}
 	else {
-		for (int i = 0; i < len; ++i) {
+		for (int i = 0; i < skeletons.size(); ++i) {
+			
+			if (skeletons[i]->isColliding(player->getposPlayer())) {
+				player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+			}
 			skeletons[i]->update(deltaTime);
 		}
+
+		for (int i = 0; i < vampires.size(); ++i) {
+
+			if (vampires[i]->isColliding(player->getposPlayer())) {
+				player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+			}
+			vampires[i]->update(deltaTime);
+		}
+		for (int i = 0;  i < ghosts.size(); ++i) {
+			if (ghosts[i]->isColliding(player->getposPlayer())) {
+				player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+			}
+			ghosts[i]->update(deltaTime);
+
+		}
+
 	}
 
 	if (map->collisionTrap(player ->getposPlayer(), glm::ivec2(32, 32))) {
@@ -217,13 +253,14 @@ void Scene::render()
 	int len  = skeletons.size();
 	for (int i = 0; i < len; i++) {
 		skeletons[i]->render();
-		
 	}
-
-	
-
+	for (int i = 0; i < vampires.size(); i++) {
+		vampires[i]->render();
+	}
+	for (int i = 0; i < ghosts.size(); i++) {
+		ghosts[i]->render();
+	}
 }
-
 
 void Scene::initShaders()
 {
