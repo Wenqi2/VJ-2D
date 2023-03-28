@@ -120,6 +120,11 @@ bool TileMap::loadLevel(const string &levelFile)
 				Hourglass_pos = glm::vec2(i, j);
 				map[j * mapSize.x + i] = 0;
 			}
+			else if (tile == 'x')
+			{
+				Clock_pos = glm::vec2(i, j);
+				map[j * mapSize.x + i] = 0;
+			}
 			else
 			{	
 				if (tile == '1') ++Nblock;
@@ -302,6 +307,11 @@ glm::vec2 TileMap::getposDoor()
 glm::vec2 TileMap::getposHourglass()
 {
 	return Hourglass_pos;
+}
+
+glm::vec2 TileMap::getposClock()
+{
+	return Clock_pos;
 }
 
 int TileMap::getNblock()

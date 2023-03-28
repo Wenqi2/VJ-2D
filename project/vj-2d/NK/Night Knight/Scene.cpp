@@ -77,19 +77,22 @@ void Scene::init()
 	key->key_init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	hourglass = new Item();
 	hourglass->hourglass_init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
+	clock = new Item();
+	clock->clock_init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	items.push_back(coin);
 	items.push_back(key);
 	items.push_back(hourglass);
+	items.push_back(clock);
 
 	Doorsheet.loadFromFile("images/door.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	door = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1, 0.5), &Doorsheet, &texProgram);
-	door->setNumberAnimations(1);
+	door->setNumberAnimations(2);
 	door->setAnimationSpeed(DOOR_CLOSE, 8);
 	door->addKeyframe(0, glm::vec2(0.f, 0.f));
 
 	door->setAnimationSpeed(DOOR_OPEN, 8);
 	door->addKeyframe(0, glm::vec2(0.f, 0.5f));
-	door->changeAnimation(0);
+	door->changeAnimation(DOOR_CLOSE);
 
 	int tilesize = map->getTileSize();
 	door->setPosition(glm::vec2(SCREEN_X + map->getposDoor().x * tilesize, SCREEN_Y + map->getposDoor().y * tilesize));
@@ -125,27 +128,34 @@ void Scene::update(int deltaTime)
 	for (int i = 0; i < items.size(); ++i) {
 		switch (i)
 		{
-		case 0:
+		case 0: //COIN
 			if (items[0]->collisionItem(player->getposPlayer()) && not coinGet && coinUP) {
 				coinGet = true;
 			}
 			items[0]->update(deltaTime);
 
-		case 1:
+		case 1: // KEY
 			
 			if (items[1]->collisionItem(player->getposPlayer()) && keyUP && not keyGet) {
 				keyGet = true;
-				door->changeAnimation(1);
-				door->update(deltaTime);
+				//door->changeAnimation(1);
+				//door->update(deltaTime);
+				doorOpen = true;
 			}
 			items[1]->update(deltaTime);
 
-		case 2:
+		case 2: // HOURGLASS
 			if (items[2]->collisionItem(player->getposPlayer()) && not hourglassGet && hourglassUP) {
 				hourglassGet = true;
 				actual_time = currentTime;
 			}
 			items[2]->update(deltaTime);
+
+		case 3: // CLOCK
+			if (items[3]->collisionItem(player->getposPlayer()) && not clockGet && clockUP) {
+				clockGet = true;
+			}
+			items[3]->update(deltaTime);
 
 		default:
 			break;
@@ -189,6 +199,11 @@ void Scene::render()
 	if (currentTime >= 4000 and not hourglassGet) { // Hourglass
 		items[2]->render();
 		hourglassUP = true;
+	}
+
+	if (currentTime >= 4500 and not clockGet) { // Hourglass
+		items[3]->render();
+		clockUP = true;
 	}
 	player->render();
 	int tileSize = map->getTileSize();

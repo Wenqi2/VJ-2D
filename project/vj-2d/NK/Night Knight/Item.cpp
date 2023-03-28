@@ -10,9 +10,10 @@ void Item::key_init(const glm::ivec2& tileMapPos, ShaderProgram &texProgram, Til
 {
 	map = Tmap;
 	posItem = map->getposKey();
+	sizeItem = glm::vec2(26, 20);
 	Spritesheet.loadFromFile("images/key-blue.png", TEXTURE_PIXEL_FORMAT_RGBA);
 
-	sprite = Sprite::createSprite(glm::ivec2(22, 16), glm::vec2(0.0833f, 1.f), &Spritesheet, &texProgram);
+	sprite = Sprite::createSprite(glm::ivec2(26, 20), glm::vec2(0.0833f, 1.f), &Spritesheet, &texProgram);
 	sprite->setNumberAnimations(1);
 	sprite->setAnimationSpeed(0, 8);
 	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
@@ -30,22 +31,22 @@ void Item::key_init(const glm::ivec2& tileMapPos, ShaderProgram &texProgram, Til
 	sprite->changeAnimation(0);
 
 	int tilesize = map->getTileSize();
-	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposKey().x * tilesize, tileMapPos.y + map->getposKey().y * tilesize));
-	sizeItem = glm::vec2(22, 16);
+	sprite->setPosition(glm::vec2(tileMapPos.x + posItem.x * tilesize, tileMapPos.y + posItem.y * tilesize - 4));
+
 
 }
 
 void Item::hourglass_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* Tmap)
 {
-	sizeItem = glm::vec2(16, 21);
+	sizeItem = glm::vec2(16, 20);
 	map = Tmap;
 	posItem = map->getposHourglass();
 
-	Spritesheet.loadFromFile("images/hourglass.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(16, 21), glm::vec2(1, 1), &Spritesheet, &texProgram);
+	Spritesheet.loadFromFile("images/hourglass2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(16, 20), glm::vec2(1, 1), &Spritesheet, &texProgram);
 
 	int tilesize = map->getTileSize();
-	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposHourglass().x * tilesize, tileMapPos.y + map->getposHourglass().y * tilesize - 4));
+	sprite->setPosition(glm::vec2(tileMapPos.x + posItem.x * tilesize, tileMapPos.y + posItem.y * tilesize - 4));
 
 
 }
@@ -68,8 +69,21 @@ void Item::coin_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, Ti
 	sprite->changeAnimation(0);
 
 
-	sprite->setPosition(glm::vec2(tileMapPos.x + map->getposCoin().x * tilesize, tileMapPos.y + map->getposCoin().y * tilesize));
+	sprite->setPosition(glm::vec2(tileMapPos.x + posItem.x * tilesize, tileMapPos.y + posItem.y * tilesize));
 	
+}
+
+void Item::clock_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* Tmap)
+{
+	sizeItem = glm::vec2(22, 18);
+	map = Tmap;
+	posItem = map->getposClock();
+
+	Spritesheet.loadFromFile("images/clock.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	sprite = Sprite::createSprite(glm::ivec2(22, 18), glm::vec2(1, 1), &Spritesheet, &texProgram);
+
+	int tilesize = map->getTileSize();
+	sprite->setPosition(glm::vec2(tileMapPos.x + posItem.x * tilesize, tileMapPos.y + posItem.y * tilesize - 2));
 }
 
 bool Item::collisionItem(const glm::vec2& posPlayer)

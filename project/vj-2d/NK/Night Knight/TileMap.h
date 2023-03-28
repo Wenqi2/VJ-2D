@@ -53,6 +53,7 @@ public:
 	glm::vec2 getposCoin();
 	glm::vec2 getposDoor();
 	glm::vec2 getposHourglass();
+	glm::vec2 getposClock();
 	int getNblock();
 	vector<Enemy> enemies;
 
@@ -78,6 +79,7 @@ private:
 	glm::vec2 Coin_pos;
 	glm::vec2 Door_pos;
 	glm::vec2 Hourglass_pos;
+	glm::vec2 Clock_pos;
 
 };
 #endif // _TILE_MAP_INCLUDE

@@ -52,13 +52,16 @@ private:
 	bool coinGet = false;
 	bool hourglassUP = false;
 	bool hourglassGet = false;
-
+	bool clockUP = false;
+	bool clockGet = false;
+	bool doorOpen = false;
 
 	Skeleton *skeleton;
 	vector <Skeleton*> skeletons;
 	Item* coin;
 	Item* key;
 	Item* hourglass;
+	Item* clock;
 	vector<Item*> items;
 	int actual_time = 0;
 	
