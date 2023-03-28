@@ -100,6 +100,27 @@ bool TileMap::loadLevel(const string &levelFile)
 				enemies.push_back(e);
 				map[j * mapSize.x + i] = 0;
 			}
+			
+			else if (tile == 'v')
+			{
+
+				Enemy e;
+				e.setPos(glm::vec2(i, j));
+				e.enemyType = 'v';
+				enemies.push_back(e);
+				map[j * mapSize.x + i] = 0;
+			}
+
+			else if (tile == 'g')
+			{
+
+				Enemy e;
+				e.setPos(glm::vec2(i, j));
+				e.enemyType = 'g';
+				enemies.push_back(e);
+				map[j * mapSize.x + i] = 0;
+			}
+			
 			else if (tile == 'c') 
 			{
 				Coin_pos = glm::vec2(i, j);
@@ -245,6 +266,25 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
+bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size) const {
+
+	int x0, x1, y;
+
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = pos.y / tileSize;
+
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[y * mapSize.x + x] != 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool TileMap::collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const
 {
 
@@ -252,7 +292,6 @@ bool TileMap::collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizeP
 	bool collisionY = posPlayer.y + sizePlayer.y >= posItem.y * tileSize and posItem.y * tileSize + sizeIteam.y >= posPlayer.y + sizePlayer.y;
 	return collisionX && collisionY;
 }
-
 
 void TileMap::changeColor(const glm::ivec2& pos, const glm::ivec2& size) {
 	int x0, x1, y;
@@ -280,6 +319,14 @@ bool TileMap::collisionTrap(const glm::ivec2& pos, const glm::vec2& size) {
 		}
 
 	return false;
+}
+
+bool TileMap::collisionEnemy(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const
+{
+
+	bool collisionX = posPlayer.x + sizePlayer.x >= posItem.x  * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x + sizePlayer.x or posPlayer.x >= posItem.x * tileSize and posItem.x * tileSize + sizeIteam.x >= posPlayer.x;
+	bool collisionY = posPlayer.y + sizePlayer.y >= posItem.y * tileSize and posItem.y * tileSize + sizeIteam.y >= posPlayer.y + sizePlayer.y or posPlayer.y>= posItem.y * tileSize and posItem.y * tileSize + sizeIteam.y >= posPlayer.y;
+	return collisionX && collisionY;
 }
 
 vector<glm::ivec2> TileMap::getpositionBlock() {
