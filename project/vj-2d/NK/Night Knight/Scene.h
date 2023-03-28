@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-#include "Skeleton.h"
+#include "Ghost.h"
 #include "Item.h"
 
 
@@ -57,7 +57,11 @@ private:
 	bool doorOpen = false;
 
 	Skeleton *skeleton;
+	Vampire *vampire;
+	Ghost* ghost;
 	vector <Skeleton*> skeletons;
+	vector <Vampire*> vampires;
+	vector <Ghost*> ghosts;
 	Item* coin;
 	Item* key;
 	Item* hourglass;
