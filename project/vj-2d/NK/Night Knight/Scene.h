@@ -44,7 +44,6 @@ private:
 	Sprite* backgound;
 
 	Texture Doorsheet;
-	Sprite* door;
 
 	bool keyUP = false;
 	bool keyGet = false;

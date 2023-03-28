@@ -128,6 +128,8 @@ void Scene::update(int deltaTime)
 			if (items[1]->collisionItem(player->getposPlayer()) && keyUP && not keyGet) {
 				keyGet = true;
 				doorOpen = true;
+				door->doorOpen();
+				door->update(deltaTime);
 			}
 			items[1]->update(deltaTime);
 
@@ -148,8 +150,7 @@ void Scene::update(int deltaTime)
 			break;
 		}
 	}
-			items[3]->update(deltaTime);
-			door->update(deltaTime);
+
 
 	
 
