@@ -7,8 +7,8 @@
 
 
 
-#define SCREEN_X 32
-#define SCREEN_Y 16
+#define SCREEN_X 0
+#define SCREEN_Y 0
 
 #define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 25
@@ -38,8 +38,7 @@ void Scene::init()
 	initShaders();
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	int tileSize = map->getTileSize();
-  
-
+	initMenu();
 	int len = map->enemies.size();
 	
 	for (int i = 0; i < len; ++i) {
@@ -113,77 +112,81 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
-
-	currentTime += deltaTime;
-	player->update(deltaTime);
-	int len = skeletons.size();
-	if (hourglassGet and currentTime - actual_time <= 2000) {
-
+	if (bMenu) {
+		menu->update(deltaTime);
 	}
 	else {
-		for (int i = 0; i < skeletons.size(); ++i) {
-			
-			if (skeletons[i]->isColliding(player->getposPlayer())) {
-				player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-			}
-			skeletons[i]->update(deltaTime);
-		}
-
-		for (int i = 0; i < vampires.size(); ++i) {
-
-			if (vampires[i]->isColliding(player->getposPlayer())) {
-				player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-			}
-			vampires[i]->update(deltaTime);
-		}
-		for (int i = 0;  i < ghosts.size(); ++i) {
-			if (ghosts[i]->isColliding(player->getposPlayer())) {
-				player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-			}
-			ghosts[i]->update(deltaTime);
+		currentTime += deltaTime;
+		player->update(deltaTime);
+		int len = skeletons.size();
+		if (hourglassGet and currentTime - actual_time <= 2000) { // TIME STOP 
 
 		}
+		else {
+			for (int i = 0; i < skeletons.size(); ++i) {
 
-	}
-
-	if (map->collisionTrap(player ->getposPlayer(), glm::ivec2(32, 32))) {
-		player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	}
-
-	for (int i = 0; i < items.size(); ++i) {
-		switch (i)
-		{
-		case 0: //COIN
-			if (items[0]->collisionItem(player->getposPlayer()) && not coinGet && coinUP) {
-				coinGet = true;
+				if (skeletons[i]->isColliding(player->getposPlayer())) {
+					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+				}
+				skeletons[i]->update(deltaTime);
 			}
-			items[0]->update(deltaTime);
 
-		case 1: // KEY
-			
-			if (items[1]->collisionItem(player->getposPlayer()) && keyUP && not keyGet) {
-				keyGet = true;
-				doorOpen = true;
-				door->doorOpen();
-				door->update(deltaTime);
+			for (int i = 0; i < vampires.size(); ++i) {
+
+				if (vampires[i]->isColliding(player->getposPlayer())) {
+					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+				}
+				vampires[i]->update(deltaTime);
 			}
-			items[1]->update(deltaTime);
+			for (int i = 0; i < ghosts.size(); ++i) {
+				if (ghosts[i]->isColliding(player->getposPlayer())) {
+					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+				}
+				ghosts[i]->update(deltaTime);
 
-		case 2: // HOURGLASS
-			if (items[2]->collisionItem(player->getposPlayer()) && not hourglassGet && hourglassUP) {
-				hourglassGet = true;
-				actual_time = currentTime;
 			}
-			items[2]->update(deltaTime);
 
-		case 3: // CLOCK
-			if (items[3]->collisionItem(player->getposPlayer()) && not clockGet && clockUP) {
-				clockGet = true;
+		}
+
+		if (map->collisionTrap(player->getposPlayer(), glm::ivec2(32, 32))) {
+			player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		}
+
+		for (int i = 0; i < items.size(); ++i) {
+			switch (i)
+			{
+			case 0: //COIN
+				if (items[0]->collisionItem(player->getposPlayer()) && not coinGet && coinUP) {
+					coinGet = true;
+				}
+				items[0]->update(deltaTime);
+
+			case 1: // KEY
+
+				if (items[1]->collisionItem(player->getposPlayer()) && keyUP && not keyGet) {
+					keyGet = true;
+					doorOpen = true;
+					door->doorOpen();
+					door->update(deltaTime);
+				}
+				items[1]->update(deltaTime);
+
+			case 2: // HOURGLASS
+				if (items[2]->collisionItem(player->getposPlayer()) && not hourglassGet && hourglassUP) {
+					hourglassGet = true;
+					actual_time = currentTime;
+				}
+				items[2]->update(deltaTime);
+
+			case 3: // CLOCK
+				if (items[3]->collisionItem(player->getposPlayer()) && not clockGet && clockUP) {
+					clockGet = true;
+				}
+				items[3]->update(deltaTime);
+
+			default:
+				break;
 			}
-			items[3]->update(deltaTime);
-
-		default:
-			break;
 		}
 	}
 
@@ -200,67 +203,75 @@ void Scene::render()
 {
 	glm::mat4 modelview;
 
-	backgound->setPosition(glm::vec2(32, 16));
-	backgound->render();
-
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	map->render();
-	door->render();
-	if (not keyGet) {
-		if (map->getNblock() == 0) {
-			items[1]->render();
-			keyUP = true;
+
+	if (not bMenu) {
+		backgound->setPosition(glm::vec2(SCREEN_X, SCREEN_Y));
+		backgound->render();
+		map->render();
+		door->render();
+		if (not keyGet) {
+			if (map->getNblock() == 0) {
+				items[1]->render();
+				keyUP = true;
+			}
+		}
+		if (currentTime >= 3000 and not coinGet) { // Coin
+			items[0]->render();
+			coinUP = true;
+		}
+
+		if (currentTime >= 4000 and not hourglassGet) { // Hourglass
+			items[2]->render();
+			hourglassUP = true;
+		}
+
+		if (currentTime >= 4500 and not clockGet) { // Hourglass
+			items[3]->render();
+			clockUP = true;
+		}
+		player->render();
+		int tileSize = map->getTileSize();
+
+
+
+		vector<glm::ivec2> positionBlock = map->getpositionBlock();
+		for (auto p : positionBlock)
+		{
+			block2->setPosition(glm::vec2(SCREEN_X + p[0] * tileSize, SCREEN_Y + p[1] * tileSize));
+			block2->render();
+		}
+
+		vector<glm::vec2> positionTrap = map->getpositionTrap();
+		for (auto p : positionTrap)
+		{
+			trap->setPosition(glm::vec2(SCREEN_X + p.x * tileSize, SCREEN_Y + p.y * tileSize));
+			trap->render();
+		}
+
+		int len = skeletons.size();
+		for (int i = 0; i < len; i++) {
+			skeletons[i]->render();
+		}
+		for (int i = 0; i < vampires.size(); i++) {
+			vampires[i]->render();
+		}
+		for (int i = 0; i < ghosts.size(); i++) {
+			ghosts[i]->render();
 		}
 	}
-	if (currentTime >= 3000 and not coinGet) { // Coin
-		items[0]->render();
-		coinUP = true;
-	}
-
-	if (currentTime >= 4000 and not hourglassGet) { // Hourglass
-		items[2]->render();
-		hourglassUP = true;
-	}
-
-	if (currentTime >= 4500 and not clockGet) { // Hourglass
-		items[3]->render();
-		clockUP = true;
-	}
-	player->render();
-	int tileSize = map->getTileSize();
-
-
-
-	vector<glm::ivec2> positionBlock = map ->getpositionBlock();
-	for (auto p : positionBlock)
-	{
-		block2->setPosition(glm::vec2(SCREEN_X + p[0] * tileSize, SCREEN_Y + p[1] * tileSize));
-		block2->render();
-	}
-
-	vector<glm::vec2> positionTrap = map->getpositionTrap();
-	for (auto p : positionTrap)
-	{
-		trap->setPosition(glm::vec2(SCREEN_X + p.x * tileSize, SCREEN_Y + p.y * tileSize));
-		trap->render();
-	}
+	else menu->render();
 	
-  
-	int len  = skeletons.size();
-	for (int i = 0; i < len; i++) {
-		skeletons[i]->render();
-	}
-	for (int i = 0; i < vampires.size(); i++) {
-		vampires[i]->render();
-	}
-	for (int i = 0; i < ghosts.size(); i++) {
-		ghosts[i]->render();
-	}
+}
+
+void Scene::showscene()
+{
+	bMenu = false;
 }
 
 void Scene::initShaders()
@@ -292,4 +303,11 @@ void Scene::initShaders()
 	vShader.free();
 	fShader.free();
 }
+
+void Scene::initMenu() {
+	menu = new Menu();
+	menu->init(texProgram);
+
+}
+
 

@@ -7,6 +7,7 @@
 
 #include "Ghost.h"
 #include "Item.h"
+#include "Menu.h"
 
 
 
@@ -23,8 +24,10 @@ public:
 	~Scene();
 
 	void init();
+	void initMenu();
 	void update(int deltaTime);
 	void render();
+	void showscene();
 	
 
 private:
@@ -54,6 +57,10 @@ private:
 	bool clockUP = false;
 	bool clockGet = false;
 	bool doorOpen = false;
+
+	bool bMenu = true;
+	Menu* menu;
+
 
 	Skeleton *skeleton;
 	Vampire *vampire;

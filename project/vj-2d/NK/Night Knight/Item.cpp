@@ -49,8 +49,7 @@ void Item::door_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, Ti
 	sprite->addKeyframe(0, glm::vec2(0.f, 0.f));
 
 	sprite->setAnimationSpeed(DOOR_OPEN, 8);
-	sprite->addKeyframe(0, glm::vec2(0.f, 0.5f));
-	sprite->changeAnimation(DOOR_CLOSE);
+	sprite->addKeyframe(1, glm::vec2(0.f, 0.5f));
 
 	int tilesize = map->getTileSize();
 	sprite->setPosition(glm::vec2(SCREEN_X + posItem.x * tilesize, SCREEN_Y + posItem.y * tilesize));
@@ -104,6 +103,10 @@ void Item::clock_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, T
 
 	int tilesize = map->getTileSize();
 	sprite->setPosition(glm::vec2(tileMapPos.x + posItem.x * tilesize, tileMapPos.y + posItem.y * tilesize - 2));
+}
+
+void Item::arrow_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* map)
+{
 }
 
 bool Item::collisionItem(const glm::vec2& posPlayer)

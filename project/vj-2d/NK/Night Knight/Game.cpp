@@ -10,6 +10,11 @@ void Game::init()
 	scene.init();
 }
 
+void Game::initScene()
+{
+	scene.showscene();
+}
+
 bool Game::update(int deltaTime)
 {
 	scene.update(deltaTime);
