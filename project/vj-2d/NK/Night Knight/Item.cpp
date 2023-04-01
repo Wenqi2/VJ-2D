@@ -52,7 +52,7 @@ void Item::door_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, Ti
 	sprite->addKeyframe(1, glm::vec2(0.f, 0.5f));
 
 	int tilesize = map->getTileSize();
-	sprite->setPosition(glm::vec2(SCREEN_X + posItem.x * tilesize, SCREEN_Y + posItem.y * tilesize));
+	sprite->setPosition(glm::vec2(SCREEN_X + posItem.x * tilesize, 32+SCREEN_Y + posItem.y * tilesize));
 }
 
 void Item::hourglass_init(const glm::ivec2& tileMapPos, ShaderProgram& texProgram, TileMap* Tmap)

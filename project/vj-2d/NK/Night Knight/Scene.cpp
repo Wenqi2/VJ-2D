@@ -8,7 +8,7 @@
 
 
 #define SCREEN_X 0
-#define SCREEN_Y 0
+#define SCREEN_Y 32
 
 #define INIT_PLAYER_X_TILES 4
 #define INIT_PLAYER_Y_TILES 25
@@ -36,7 +36,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y-32), texProgram);
 	int tileSize = map->getTileSize();
 	initMenu();
 	int len = map->enemies.size();
@@ -86,6 +86,15 @@ void Scene::init()
 	backgound->addKeyframe(0, glm::vec2(0.f, 0.f));
 	backgound->changeAnimation(0);
 
+
+	Healthsheet.loadFromFile("images/health.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	health = Sprite::createSprite(glm::ivec2(20,18), glm::vec2(1, 1), &Healthsheet, &texProgram);
+	health->setNumberAnimations(1);
+	health->setAnimationSpeed(0, 8);
+	health->addKeyframe(0, glm::vec2(0.f, 0.f));
+	health->changeAnimation(0);
+
+
 	door = new Item();
 	door -> door_init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	coin = new Item();
@@ -118,29 +127,39 @@ void Scene::update(int deltaTime)
 	else {
 		currentTime += deltaTime;
 		player->update(deltaTime);
-		int len = skeletons.size();
+		if (invencibility > 0) invencibility--;
 		if (hourglassGet and currentTime - actual_time <= 2000) { // TIME STOP 
 
 		}
 		else {
 			for (int i = 0; i < skeletons.size(); ++i) {
 
-				if (skeletons[i]->isColliding(player->getposPlayer())) {
-					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+				if (invencibility <= 0 and skeletons[i]->isColliding(player->getposPlayer())) {
+					hp--;
+					invencibility = 60;
+					if (hp == 0) {
+						player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+						hp = 3;
+					}
+
 				}
 				skeletons[i]->update(deltaTime);
 			}
 
 			for (int i = 0; i < vampires.size(); ++i) {
 
-				if (vampires[i]->isColliding(player->getposPlayer())) {
+				if (invencibility <= 0 and vampires[i]->isColliding(player->getposPlayer())) {
 					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+					hp--;
+					invencibility = 60;
 				}
 				vampires[i]->update(deltaTime);
 			}
 			for (int i = 0; i < ghosts.size(); ++i) {
-				if (ghosts[i]->isColliding(player->getposPlayer())) {
+				if (invencibility <= 0 and ghosts[i]->isColliding(player->getposPlayer())) {
 					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+					hp--;
+					invencibility = 60;
 				}
 				ghosts[i]->update(deltaTime);
 
@@ -148,8 +167,10 @@ void Scene::update(int deltaTime)
 
 		}
 
-		if (map->collisionTrap(player->getposPlayer(), glm::ivec2(32, 32))) {
+		if (invencibility <= 0 and map->collisionTrap(player->getposPlayer(), glm::ivec2(32, 32))) {
 			player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+			hp--;
+			invencibility = 60;
 		}
 
 		for (int i = 0; i < items.size(); ++i) {
@@ -211,10 +232,19 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
 	if (not bMenu) {
+
+
 		backgound->setPosition(glm::vec2(SCREEN_X, SCREEN_Y));
 		backgound->render();
 		map->render();
 		door->render();
+
+		for (int i = 0; i < hp; ++i) {
+			
+			health->setPosition(glm::vec2(i * 22, 0));
+			health->render();
+		}
+
 		if (not keyGet) {
 			if (map->getNblock() == 0) {
 				items[1]->render();
@@ -235,7 +265,10 @@ void Scene::render()
 			items[3]->render();
 			clockUP = true;
 		}
-		player->render();
+
+		if (invencibility <= 0) player->render();
+		else if (invencibility % 10 > 5) player->render();
+		 
 		int tileSize = map->getTileSize();
 
 

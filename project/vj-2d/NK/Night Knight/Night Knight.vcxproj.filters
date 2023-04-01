@@ -115,4 +115,9 @@
     <None Include="..\Release\freetype6.dll" />
     <None Include="..\Release\glew32.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\Sprites\7-Objects\17-Heart\1-Idle\1.png">
+      <Filter>Archivos de recursos</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

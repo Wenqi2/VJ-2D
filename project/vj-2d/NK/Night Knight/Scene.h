@@ -45,6 +45,8 @@ private:
 	Sprite* trap;
 	Texture Backsheet;
 	Sprite* backgound;
+	Texture Healthsheet;
+	Sprite* health;
 
 	Texture Doorsheet;
 
@@ -75,6 +77,8 @@ private:
 	Item* door;
 	vector<Item*> items;
 	int actual_time = 0;
+	int hp = 3;
+	int invencibility = 0;
 	
 };
 
