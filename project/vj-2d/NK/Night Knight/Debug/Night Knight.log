@@ -1,2 +1,11 @@
-﻿  Menu.cpp
-  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe
+﻿  Item.cpp
+  Scene.cpp
+C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(136,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(150,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(159,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(177,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(199,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(295,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(298,21): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Night Knight.vcxproj -> C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe

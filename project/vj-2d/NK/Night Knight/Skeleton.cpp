@@ -132,10 +132,10 @@ void Skeleton::setPosition(const glm::vec2 &pos)
 
 bool Skeleton::isColliding(glm::vec2 posPlayer) {
 	
-	//if (map->collisionEnemy(posPlayer, glm::ivec2(14,28), (posEnemy/16), glm::ivec2(36,28))) {	
-	//	return true;
-	//}
-	//return false;
+	if (map->collisionEnemy(posPlayer, glm::ivec2(14,28), (posEnemy/16), glm::ivec2(36,28))) {	
+	return true;
+	}
+	return false;
 
 	return false;
 }
