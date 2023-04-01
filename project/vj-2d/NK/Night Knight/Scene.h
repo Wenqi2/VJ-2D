@@ -23,7 +23,7 @@ public:
 	Scene();
 	~Scene();
 
-	void init();
+	void init(int level);
 	void initMenu();
 	void update(int deltaTime);
 	void render();
@@ -79,6 +79,8 @@ private:
 	int actual_time = 0;
 	int hp = 3;
 	int invencibility = 0;
+	int level_scene;
+	int delay_start;
 	
 };
 

@@ -1,11 +1,12 @@
-﻿  Item.cpp
-  Scene.cpp
-C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(136,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(150,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(159,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(177,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(199,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(295,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Scene.cpp(298,21): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Night Knight.vcxproj -> C:\Users\salva\source\repos\VJ-2D\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe
+﻿  Scene.cpp
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(164,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(178,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(187,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(221,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(243,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(341,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(344,21): warning C4018: '<': no coinciden signed/unsigned
+SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(stb_image_aug.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe

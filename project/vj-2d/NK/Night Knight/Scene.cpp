@@ -33,10 +33,39 @@ Scene::~Scene()
 
 
 
-void Scene::init()
+void Scene::init(int level)
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y-32), texProgram);
+	delay_start = 0;
+	keyUP = false;
+	keyGet = false;
+	coinUP = false;
+	coinGet = false;
+	hourglassUP = false;
+	hourglassGet = false;
+	clockUP = false;
+	clockGet = false;
+	doorOpen = false;
+	skeletons.clear();
+	vampires.clear();
+	ghosts.clear();
+
+	level_scene = level;
+		switch (level_scene)
+		{
+		case 0:
+			map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			break;
+		case 1:
+			map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			break;
+		case 2:
+			map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			break;
+		default:
+			break;
+		}
+
 	int tileSize = map->getTileSize();
 	initMenu();
 	int len = map->enemies.size();
@@ -121,10 +150,11 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
+
 	if (bMenu) {
 		menu->update(deltaTime);
 	}
-	else {
+	else if(delay_start >= 50) {
 		currentTime += deltaTime;
 		player->update(deltaTime);
 		if (invencibility > 0) invencibility--;
@@ -166,6 +196,22 @@ void Scene::update(int deltaTime)
 			}
 
 		}
+		// decition when produce a colision with door 
+		switch (level_scene)
+		{
+		case 0:
+			if (door->collisionItem(player->getposPlayer()) && keyGet) {
+				init(1);
+			}
+		case 1:
+			if (door->collisionItem(player->getposPlayer()) && keyGet) {
+				init(2);
+			}
+		case 2:
+		default:
+			break;
+		}
+
 
 		if (invencibility <= 0 and map->collisionTrap(player->getposPlayer(), glm::ivec2(32, 32))) {
 			player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
@@ -209,6 +255,9 @@ void Scene::update(int deltaTime)
 				break;
 			}
 		}
+	}
+	else {
+		++delay_start;
 	}
 
 
