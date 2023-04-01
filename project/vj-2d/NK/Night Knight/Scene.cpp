@@ -239,7 +239,6 @@ void Scene::render()
 		int tileSize = map->getTileSize();
 
 
-
 		vector<glm::ivec2> positionBlock = map->getpositionBlock();
 		for (auto p : positionBlock)
 		{

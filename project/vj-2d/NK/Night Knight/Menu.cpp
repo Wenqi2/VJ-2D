@@ -15,7 +15,7 @@ void Menu::init(ShaderProgram& texProgram)
 	credits = Sprite::createSprite(glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT), glm::vec2(1.0, 1.0), &texCred, &texProgram);
 
 	texArrow.loadFromFile("images/arrow.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	arrow = Sprite::createSprite(glm::vec2(32, 32), glm::vec2(1.0, 1.0), &texArrow, &texProgram);
+	arrow = Sprite::createSprite(glm::vec2(38, 38), glm::vec2(1.0, 1.0), &texArrow, &texProgram);
 	delay = 12;
 }
 
@@ -26,7 +26,6 @@ void Menu::render()
 	case 0:
 		menu->render();
 		arrow->render();
-		arrow->setPosition(glm::vec2(50.0f, 50.0f + cursor * 36.0f));
 		break;
 	case 1:
 		instructions->render();
@@ -97,6 +96,6 @@ void Menu::update(int deltaTime)
 				}
 			}
 		}
-		arrow->setPosition(glm::vec2(50.0f, 50.0f + cursor * 36.0f));
+		arrow->setPosition(glm::vec2(390.0f, 240.0f + cursor * 71.0f));
 	}
 }
