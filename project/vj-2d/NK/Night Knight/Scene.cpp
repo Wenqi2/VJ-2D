@@ -46,20 +46,31 @@ void Scene::init(int level)
 	clockUP = false;
 	clockGet = false;
 	doorOpen = false;
+	bMenu = false;
+	godmode = false;
+	ScreenPosY = 495;
+
 	skeletons.clear();
 	vampires.clear();
 	ghosts.clear();
+
 
 	level_scene = level;
 		switch (level_scene)
 		{
 		case 0:
+			initMenu();
+			bMenu = true;
+			bLost = false;
+			bWin = false;
+			hp = 3;
+		case 1:
 			map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
 			break;
-		case 1:
+		case 2:
 			map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
 			break;
-		case 2:
+		case 3:
 			map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
 			break;
 		default:
@@ -67,7 +78,6 @@ void Scene::init(int level)
 		}
 
 	int tileSize = map->getTileSize();
-	initMenu();
 	int len = map->enemies.size();
 	
 	for (int i = 0; i < len; ++i) {
@@ -123,6 +133,11 @@ void Scene::init(int level)
 	health->addKeyframe(0, glm::vec2(0.f, 0.f));
 	health->changeAnimation(0);
 
+	texWin.loadFromFile("images/win.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	winScreen = Sprite::createSprite(glm::ivec2(SCREEN_WIDTH, SCREEN_HEIGHT), glm::vec2(1, 1), &texWin, &texProgram);
+
+	texLost.loadFromFile("images/gameover.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	gameover = Sprite::createSprite(glm::ivec2(SCREEN_WIDTH, SCREEN_HEIGHT), glm::vec2(1, 1), &texLost, &texProgram);
 
 	door = new Item();
 	door -> door_init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
@@ -154,7 +169,50 @@ void Scene::update(int deltaTime)
 	if (bMenu) {
 		menu->update(deltaTime);
 	}
-	else if(delay_start >= 50) {
+	else if (bWin) {
+		if (ScreenPosY > 0)
+			ScreenPosY = ScreenPosY - float(0.25f * deltaTime);
+		else {
+			if (Game::instance().getKey(13)) {
+				init(0);
+			}
+		}
+		winScreen->setPosition(glm::vec2(0.0f, ScreenPosY));
+	}
+
+	else if (bLost) {
+		if (ScreenPosY > 0)
+			ScreenPosY = ScreenPosY - float(0.2f * deltaTime);
+		else {
+			if (Game::instance().getKey(13)) {
+				init(0);
+			}
+		}
+		gameover->setPosition(glm::vec2(0.0f, ScreenPosY));
+	}
+	else if(delay_start >= 50) 
+	{
+		//Jump Level & godmode
+		if (Game::instance().getKey('g')) {
+			godmode = !godmode;
+		}
+		else if (Game::instance().getKey('1')) {
+			init(1);
+		}
+		else if (Game::instance().getKey('2')) {
+			init(2);
+		}
+		else if (Game::instance().getKey('3')) {
+			init(3);
+		}
+		else if (Game::instance().getKey('k')) {
+			keyUP = true;
+		}
+		//Check HP
+		if (hp == 0) {
+			bLost = true;
+		}
+
 		currentTime += deltaTime;
 		player->update(deltaTime);
 		if (invencibility > 0) invencibility--;
@@ -164,21 +222,17 @@ void Scene::update(int deltaTime)
 		else {
 			for (int i = 0; i < skeletons.size(); ++i) {
 
-				if (invencibility <= 0 and skeletons[i]->isColliding(player->getposPlayer())) {
+				if (invencibility <= 0 and skeletons[i]->isColliding(player->getposPlayer()) and not godmode) {
 					hp--;
 					invencibility = 60;
-					if (hp == 0) {
-						player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-						hp = 3;
-					}
-
 				}
 				skeletons[i]->update(deltaTime);
 			}
 
-			for (int i = 0; i < vampires.size(); ++i) {
+			for (int i = 0; i < vampires.size(); ++i) 
+			{
 
-				if (invencibility <= 0 and vampires[i]->isColliding(player->getposPlayer())) {
+				if (invencibility <= 0 and vampires[i]->isColliding(player->getposPlayer()) and not godmode) {
 					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 					hp--;
 					invencibility = 60;
@@ -186,7 +240,7 @@ void Scene::update(int deltaTime)
 				vampires[i]->update(deltaTime);
 			}
 			for (int i = 0; i < ghosts.size(); ++i) {
-				if (invencibility <= 0 and ghosts[i]->isColliding(player->getposPlayer())) {
+				if (invencibility <= 0 and ghosts[i]->isColliding(player->getposPlayer()) and not godmode) {
 					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 					hp--;
 					invencibility = 60;
@@ -196,18 +250,24 @@ void Scene::update(int deltaTime)
 			}
 
 		}
-		// decition when produce a colision with door 
+		// decition when produce a collision with door 
 		switch (level_scene)
 		{
-		case 0:
-			if (door->collisionItem(player->getposPlayer()) && keyGet) {
-				init(1);
-			}
 		case 1:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
 				init(2);
 			}
+			break;
 		case 2:
+			if (door->collisionItem(player->getposPlayer()) && keyGet) {
+				init(3);
+			}
+			break;
+		case 3:
+			if (door->collisionItem(player->getposPlayer()) && keyGet) {
+				bWin = true;
+			}
+			break;
 		default:
 			break;
 		}
@@ -282,7 +342,6 @@ void Scene::render()
 
 	if (not bMenu) {
 
-
 		backgound->setPosition(glm::vec2(SCREEN_X, SCREEN_Y));
 		backgound->render();
 		map->render();
@@ -296,8 +355,10 @@ void Scene::render()
 
 		if (not keyGet) {
 			if (map->getNblock() == 0) {
-				items[1]->render();
 				keyUP = true;
+			}
+			if (keyUP) {
+				items[1]->render();
 			}
 		}
 		if (currentTime >= 3000 and not coinGet) { // Coin
@@ -345,6 +406,13 @@ void Scene::render()
 		for (int i = 0; i < ghosts.size(); i++) {
 			ghosts[i]->render();
 		}
+
+		if (bWin) {
+			winScreen->render();
+		}
+		if (bLost) {
+			gameover->render();
+		}
 	}
 	else menu->render();
 	
@@ -352,7 +420,7 @@ void Scene::render()
 
 void Scene::showscene()
 {
-	bMenu = false;
+	init(1);
 }
 
 void Scene::initShaders()

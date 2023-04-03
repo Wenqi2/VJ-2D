@@ -45,6 +45,7 @@ void Menu::update(int deltaTime)
 	{
 	case 0:
 		menu->update(deltaTime);
+		arrow->setPosition(glm::vec2(390.0f, 240.0f + cursor * 71.0f));
 		arrow->update(deltaTime);
 		break;
 	case 1:
@@ -96,6 +97,5 @@ void Menu::update(int deltaTime)
 				}
 			}
 		}
-		arrow->setPosition(glm::vec2(390.0f, 240.0f + cursor * 71.0f));
 	}
 }

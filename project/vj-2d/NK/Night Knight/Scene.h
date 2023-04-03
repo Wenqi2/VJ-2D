@@ -48,6 +48,11 @@ private:
 	Texture Healthsheet;
 	Sprite* health;
 
+	Texture texWin;
+	Sprite* winScreen;
+	Texture texLost;
+	Sprite* gameover;
+
 	Texture Doorsheet;
 
 	bool keyUP = false;
@@ -59,8 +64,10 @@ private:
 	bool clockUP = false;
 	bool clockGet = false;
 	bool doorOpen = false;
-
-	bool bMenu = true;
+	bool godmode;
+	bool bMenu ;
+	bool bLost;
+	bool bWin;
 	Menu* menu;
 
 
@@ -81,6 +88,7 @@ private:
 	int invencibility = 0;
 	int level_scene;
 	int delay_start;
+	int ScreenPosY;
 	
 };
 
