@@ -106,6 +106,8 @@ void Player::update(int deltaTime)
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
 				bJumping = true;
+				sound.ChangeVolum(0.2);
+				sound.playSFX("sfx/jump.wav");
 				jumpAngle = 0;
 				startY = posPlayer.y;
 			}

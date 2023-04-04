@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "TileMap.h"
 #include <glm/glm.hpp>
+#include "SoundManager.h"
 
 
 class Menu {
@@ -15,6 +16,7 @@ public:
 	void update(int deltaTime);
 
 private:
+	SoundManager sound;
 	Texture spritesheet, texMenu, texIns, texCred, texArrow;
 	Sprite* menu, * instructions, * credits, *arrow;
 	int cursor = 0;

@@ -4,6 +4,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "SoundManager.h"
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -22,6 +23,7 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	
 private:
+	SoundManager sound;
 	bool bJumping;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;

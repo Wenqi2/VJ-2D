@@ -65,6 +65,7 @@ void Menu::update(int deltaTime)
 			if (cursor <= 0) cursor = 0;
 			else {
 				cursor--;
+				sound.playSFX("sfx/select.wav");
 			}
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN) && level == 0) {
@@ -72,6 +73,7 @@ void Menu::update(int deltaTime)
 			if (cursor >= 2) cursor = 2;
 			else {
 				cursor++;
+				sound.playSFX("sfx/select.wav");
 			}
 		}
 		else if (Game::instance().getKey(13)) 

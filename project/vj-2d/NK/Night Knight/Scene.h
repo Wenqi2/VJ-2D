@@ -34,6 +34,7 @@ private:
 	void initShaders();
 
 private:
+	SoundManager sound;
 	TileMap *map;
 	Player *player;
 	ShaderProgram texProgram;

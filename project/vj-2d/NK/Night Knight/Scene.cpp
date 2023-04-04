@@ -49,6 +49,7 @@ void Scene::init(int level)
 	bMenu = false;
 	godmode = false;
 	ScreenPosY = 495;
+	sound.stopBGM();
 
 	skeletons.clear();
 	vampires.clear();
@@ -64,14 +65,19 @@ void Scene::init(int level)
 			bLost = false;
 			bWin = false;
 			hp = 3;
+			map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			break;
 		case 1:
 			map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			sound.playBGM("audio/Fungal Funk.mp3", true);
 			break;
 		case 2:
 			map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			sound.playBGM("audio/Rhythmortis.mp3", true);
 			break;
 		case 3:
 			map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			sound.playBGM("audio/Crypteque.mp3", true);
 			break;
 		default:
 			break;
@@ -216,13 +222,18 @@ void Scene::update(int deltaTime)
 		currentTime += deltaTime;
 		player->update(deltaTime);
 		if (invencibility > 0) invencibility--;
-		if (hourglassGet and currentTime - actual_time <= 2000) { // TIME STOP 
+		if (hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
 
 		}
 		else {
+			if (hourglassGet and currentTime - actual_time >= 4000) {
+				sound.ChangeVolum(1.0);
+				sound.resumeBGM();
+			}
 			for (int i = 0; i < skeletons.size(); ++i) {
 
 				if (invencibility <= 0 and skeletons[i]->isColliding(player->getposPlayer()) and not godmode) {
+					sound.playSFX("sounds/lose_life.mp3");
 					hp--;
 					invencibility = 60;
 				}
@@ -234,6 +245,7 @@ void Scene::update(int deltaTime)
 
 				if (invencibility <= 0 and vampires[i]->isColliding(player->getposPlayer()) and not godmode) {
 					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+					sound.playSFX("sounds/lose_life.mp3");
 					hp--;
 					invencibility = 60;
 				}
@@ -242,6 +254,7 @@ void Scene::update(int deltaTime)
 			for (int i = 0; i < ghosts.size(); ++i) {
 				if (invencibility <= 0 and ghosts[i]->isColliding(player->getposPlayer()) and not godmode) {
 					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+					sound.playSFX("sounds/lose_life.mp3");
 					hp--;
 					invencibility = 60;
 				}
@@ -285,12 +298,14 @@ void Scene::update(int deltaTime)
 			case 0: //COIN
 				if (items[0]->collisionItem(player->getposPlayer()) && not coinGet && coinUP) {
 					coinGet = true;
+					sound.playSFX("sounds/coin.mp3");
 				}
 				items[0]->update(deltaTime);
 
 			case 1: // KEY
 
 				if (items[1]->collisionItem(player->getposPlayer()) && keyUP && not keyGet) {
+					sound.playSFX("sounds/key.mp3");
 					keyGet = true;
 					doorOpen = true;
 					door->doorOpen();
@@ -301,6 +316,9 @@ void Scene::update(int deltaTime)
 			case 2: // HOURGLASS
 				if (items[2]->collisionItem(player->getposPlayer()) && not hourglassGet && hourglassUP) {
 					hourglassGet = true;
+					sound.pauseBGM();
+					sound.ChangeVolum(0.15);
+					sound.playSFX("sfx/zawarudo.wav");
 					actual_time = currentTime;
 				}
 				items[2]->update(deltaTime);
@@ -308,6 +326,7 @@ void Scene::update(int deltaTime)
 			case 3: // CLOCK
 				if (items[3]->collisionItem(player->getposPlayer()) && not clockGet && clockUP) {
 					clockGet = true;
+					sound.playSFX("sounds/clock.mp3");
 				}
 				items[3]->update(deltaTime);
 
@@ -348,7 +367,6 @@ void Scene::render()
 		door->render();
 
 		for (int i = 0; i < hp; ++i) {
-			
 			health->setPosition(glm::vec2(i * 22, 0));
 			health->render();
 		}
@@ -456,7 +474,7 @@ void Scene::initShaders()
 void Scene::initMenu() {
 	menu = new Menu();
 	menu->init(texProgram);
-
+	sound.playBGM("audio/Ori and the Blind Forest.mp3",false);
 }
 
 
