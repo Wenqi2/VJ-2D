@@ -125,10 +125,10 @@ void Vampire::update(int deltaTime)
 	
 		if (map->collisionMoveUp(posEnemy, glm::ivec2(26, 30))) topped = true;
 
-		else if (map->collisionMoveLeft(posEnemy, glm::ivec2(26, 29))) {
+		else if (map->collisionMoveLeft(glm::vec2(posEnemy.x-1, posEnemy.y), glm::ivec2(26, 29))) {
 			facing = !facing;
 		}
-		else if (map->collisionMoveRight(posEnemy, glm::ivec2(26, 29))) {
+		else if (map->collisionMoveRight(posEnemy, glm::ivec2(30, 29))) {
 			facing = !facing;
 		}
 		else if (map->collisionTrap(posEnemy, glm::ivec2(26, 29))) topped = false;
