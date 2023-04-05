@@ -55,6 +55,7 @@ void Scene::init(int level)
 	skeletons.clear();
 	vampires.clear();
 	ghosts.clear();
+	items.clear();
 
 
 	level_scene = level;
@@ -256,7 +257,6 @@ void Scene::update(int deltaTime)
 		}
 
 		currentTime += deltaTime;
-		player->update(deltaTime);
 		if (invencibility > 0) invencibility--;
 		if (hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
 
@@ -297,7 +297,6 @@ void Scene::update(int deltaTime)
 			{
 
 				if (invencibility <= 0 and vampires[i]->isColliding(player->getposPlayer()) and not godmode) {
-					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 					sound.playSFX("sounds/lose_life.mp3");
 					hp--;
 					invencibility = 60;
@@ -306,7 +305,6 @@ void Scene::update(int deltaTime)
 			}
 			for (int i = 0; i < ghosts.size(); ++i) {
 				if (invencibility <= 0 and ghosts[i]->isColliding(player->getposPlayer()) and not godmode) {
-					player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 					sound.playSFX("sounds/lose_life.mp3");
 					hp--;
 					invencibility = 60;
@@ -403,6 +401,7 @@ void Scene::update(int deltaTime)
 				break;
 			}
 		}
+		player->update(deltaTime);
 	}
 	else {
 		++delay_start;
@@ -448,17 +447,17 @@ void Scene::render()
 				items[1]->render();
 			}
 		}
-		if (currentTime >= 3000 and not coinGet) { // Coin
+		if (currentTime >= 4000 and not coinGet) { // Coin
 			items[0]->render();
 			coinUP = true;
 		}
 
-		if (currentTime >= 4000 and not hourglassGet) { // Hourglass
+		if (currentTime >= 8000 and not hourglassGet) { // Hourglass
 			items[2]->render();
 			hourglassUP = true;
 		}
 
-		if (currentTime >= 10000 and not clockGet) { // Hourglass
+		if (currentTime >= 13000 and not clockGet) { // Hourglass
 			items[3]->render();
 			clockUP = true;
 		}
