@@ -254,6 +254,25 @@ void Scene::update(int deltaTime)
 		else if (Game::instance().getKey('k')) {
 			keyUP = true;
 		}
+
+		//timer logic
+		if (timer <= 0) {
+			time--;
+			timer = 60;
+
+		}
+		if (time < 9) {
+			Timevec[0].changeAnimation(time);
+			Timevec[1].changeAnimation(0);
+		}
+		else if (time == 0 && !keyGet) bLost = true;
+		else {
+			Timevec[0].changeAnimation(time % 10);
+			Timevec[1].changeAnimation(time / 10);
+		}
+
+		
+
 		//Check HP
 		if (hp == 0) {
 			sound.stopBGM();
@@ -265,25 +284,11 @@ void Scene::update(int deltaTime)
 		currentTime += deltaTime;
 		player->update(deltaTime);
 		if (invencibility > 0) invencibility--;
-		if (hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
+		if (keyGet ||  hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
 
 		}
 		else {
 
-			if (timer <= 0) {
-				time--;
-				timer = 60;
-				if (time < 9) {
-					Timevec[0].changeAnimation(time);
-					Timevec[1].changeAnimation(0);
-				}
-				else if (time == 0) bLost = true;
-				else {
-					Timevec[0].changeAnimation(time % 10);
-					Timevec[1].changeAnimation(time / 10);
-				}
-			}
-			
 			timer--;
 
 			if (hourglassGet and currentTime - actual_time >= 4000) {
@@ -337,7 +342,13 @@ void Scene::update(int deltaTime)
 		case 1:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
 				puntuation += 50*maxblock+1000;
-				init(2);
+				
+				if (time ==  0) init(2);
+				else {
+					time--;
+					puntuation += 20;
+
+				}
 			}
 			break;
 		case 2:
@@ -474,18 +485,23 @@ void Scene::render()
 		else if (invencibility % 10 > 5) player->render();
 		 
 
-		Timevec[1].setPosition(glm::vec2(500, 2));
-		Timevec[1].render();
-		Timevec[0].setPosition(glm::vec2(527, 2));
-		Timevec[0].render();
+		
 
 		for (int i = 0; i < 5; ++i) {
 
 			Pointvec[i].setPosition(glm::vec2(225 - i * 25, 2));
 			Pointvec[i].render();
 			
+			
 
 		}
+
+		Timevec[1].setPosition(glm::vec2(500, 2));
+		Timevec[1].render();
+		Timevec[0].setPosition(glm::vec2(527, 2));
+		Timevec[0].render();
+
+		
 		
 		nivel->setPosition(glm::vec2(270, 2));
 		nivel->render();
@@ -523,9 +539,6 @@ void Scene::render()
 		}
 
 		if (bWin) {
-			if (time > 0) {
-				puntuation += time * 10;
-			}
 			winScreen->render();
 		}
 		if (bLost) {
