@@ -1,0 +1,17 @@
+Wenqi Zhou
+Salvador Moya Bartolomé
+
+Funcionalidad:
+Hemos hecho todo lo que poner enunciado por ejemplo:
+-la pantalla que sale lentamente
+-Animación de los enemigos 
+-efectos de sonido de los objetos 
+-Animación de personaje 
+etc.
+
+Instruccions:
+← → Mover
+↑ saltar
+g godmode
+k parecer la llave
+1,2,3 elecionar el nivell

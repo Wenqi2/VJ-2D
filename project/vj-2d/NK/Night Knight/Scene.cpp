@@ -49,7 +49,7 @@ void Scene::init(int level)
 	bMenu = false;
 	godmode = false;
 	time = 99;
-	ScreenPosY = 495;
+	ScreenPosY = SCREEN_HEIGHT+2;
 	sound.stopBGM();
 
 	skeletons.clear();
@@ -70,14 +70,17 @@ void Scene::init(int level)
 			break;
 		case 1:
 			map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			sound.ChangeVolum(0.3);
 			sound.playBGM("audio/Fungal Funk.mp3", true);
 			break;
 		case 2:
 			map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			sound.ChangeVolum(0.3);
 			sound.playBGM("audio/Rhythmortis.mp3", true);
 			break;
 		case 3:
 			map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
+			sound.ChangeVolum(0.3);
 			sound.playBGM("audio/Crypteque.mp3", true);
 			break;
 		default:
@@ -204,7 +207,8 @@ void Scene::update(int deltaTime)
 	if (bMenu) {
 		menu->update(deltaTime);
 	}
-	else if (bWin) {
+	else if (bWin) 
+	{
 		if (ScreenPosY > 0)
 			ScreenPosY = ScreenPosY - float(0.25f * deltaTime);
 		else {
@@ -245,6 +249,9 @@ void Scene::update(int deltaTime)
 		}
 		//Check HP
 		if (hp == 0) {
+			sound.stopBGM();
+			sound.ChangeVolum(0.4);
+			sound.playBGM("audio/lost.mp3", false);
 			bLost = true;
 		}
 
@@ -271,8 +278,6 @@ void Scene::update(int deltaTime)
 			}
 			
 			timer--;
-
-			
 
 			if (hourglassGet and currentTime - actual_time >= 4000) {
 				sound.ChangeVolum(1.0);
@@ -337,6 +342,9 @@ void Scene::update(int deltaTime)
 		case 3:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
 				bWin = true;
+				sound.stopBGM();
+				sound.ChangeVolum(0.4);
+				sound.playBGM("audio/win.mp3", false);
 			}
 			break;
 		default:
@@ -554,6 +562,7 @@ void Scene::initShaders()
 void Scene::initMenu() {
 	menu = new Menu();
 	menu->init(texProgram);
+	sound.ChangeVolum(0.6);
 	sound.playBGM("audio/Ori and the Blind Forest.mp3",false);
 }
 
