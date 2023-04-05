@@ -56,6 +56,17 @@ private:
 
 	Texture Doorsheet;
 
+	Texture Numbersheet;
+	Sprite* numbers;
+	int puntuation = 0;
+	int points = 0;
+	int maxblock = 0;
+	int time = 0;
+	int timer = 60;
+	vector <Sprite> Timevec;
+	vector <Sprite> Pointvec;
+
+
 	bool keyUP = false;
 	bool keyGet = false;
 	bool coinUP = false;

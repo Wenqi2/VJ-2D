@@ -48,6 +48,7 @@ void Scene::init(int level)
 	doorOpen = false;
 	bMenu = false;
 	godmode = false;
+	time = 99;
 	ScreenPosY = 495;
 	sound.stopBGM();
 
@@ -139,6 +140,34 @@ void Scene::init(int level)
 	health->addKeyframe(0, glm::vec2(0.f, 0.f));
 	health->changeAnimation(0);
 
+	//Creando los sprites de los numeros a partir del spritesheet
+	
+	Numbersheet.loadFromFile("images/NumberFont.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	numbers = Sprite::createSprite(glm::ivec2(23, 30), glm::vec2(0.1, 1), &Numbersheet, &texProgram);
+	numbers->setNumberAnimations(10);
+	for (int i = 0; i < 10; i++) {
+
+		numbers->setAnimationSpeed(i, 0);
+		numbers->addKeyframe(i, glm::vec2(i*.1f, 0.f));
+
+	}
+	numbers->changeAnimation(9);
+
+	//inicializando los vectores de sprites de tiempo y puntuación
+	
+	Timevec.push_back(*numbers);
+	Timevec.push_back(*numbers);
+	numbers->changeAnimation(0);
+	Pointvec.push_back(*numbers);
+	Pointvec.push_back(*numbers);
+	Pointvec.push_back(*numbers);
+	Pointvec.push_back(*numbers);
+	Pointvec.push_back(*numbers);
+
+
+
+	maxblock = map->getNblock();
+
 	texWin.loadFromFile("images/win.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	winScreen = Sprite::createSprite(glm::ivec2(SCREEN_WIDTH, SCREEN_HEIGHT), glm::vec2(1, 1), &texWin, &texProgram);
 
@@ -226,6 +255,25 @@ void Scene::update(int deltaTime)
 
 		}
 		else {
+
+			if (timer <= 0) {
+				time--;
+				timer = 60;
+				if (time < 9) {
+					Timevec[0].changeAnimation(time);
+					Timevec[1].changeAnimation(0);
+				}
+				else if (time == 0) bLost = true;
+				else {
+					Timevec[0].changeAnimation(time % 10);
+					Timevec[1].changeAnimation(time / 10);
+				}
+			}
+			
+			timer--;
+
+			
+
 			if (hourglassGet and currentTime - actual_time >= 4000) {
 				sound.ChangeVolum(1.0);
 				sound.resumeBGM();
@@ -263,16 +311,26 @@ void Scene::update(int deltaTime)
 			}
 
 		}
-		// decition when produce a collision with door 
+		points = puntuation + 50 * (-map->getNblock() + maxblock);
+
+		int temp = points;
+		for (int i = 0; i < 5; ++i) {	
+			if (temp >= 0)
+				Pointvec[i].changeAnimation(temp % 10);
+			temp = temp / 10;
+		}
+		// decision when produce a collision with door 
 		switch (level_scene)
 		{
 		case 1:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
+				puntuation += 50*maxblock+1000;
 				init(2);
 			}
 			break;
 		case 2:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
+				puntuation += 50*maxblock+1000;
 				init(3);
 			}
 			break;
@@ -299,6 +357,7 @@ void Scene::update(int deltaTime)
 				if (items[0]->collisionItem(player->getposPlayer()) && not coinGet && coinUP) {
 					coinGet = true;
 					sound.playSFX("sounds/coin.mp3");
+					puntuation += 1000;
 				}
 				items[0]->update(deltaTime);
 
@@ -326,6 +385,7 @@ void Scene::update(int deltaTime)
 			case 3: // CLOCK
 				if (items[3]->collisionItem(player->getposPlayer()) && not clockGet && clockUP) {
 					clockGet = true;
+					time += 10;
 					sound.playSFX("sounds/clock.mp3");
 				}
 				items[3]->update(deltaTime);
@@ -367,7 +427,7 @@ void Scene::render()
 		door->render();
 
 		for (int i = 0; i < hp; ++i) {
-			health->setPosition(glm::vec2(i * 22, 0));
+			health->setPosition(glm::vec2(6+(i * 22), 6));
 			health->render();
 		}
 
@@ -389,7 +449,7 @@ void Scene::render()
 			hourglassUP = true;
 		}
 
-		if (currentTime >= 4500 and not clockGet) { // Hourglass
+		if (currentTime >= 10000 and not clockGet) { // Hourglass
 			items[3]->render();
 			clockUP = true;
 		}
@@ -397,6 +457,22 @@ void Scene::render()
 		if (invencibility <= 0) player->render();
 		else if (invencibility % 10 > 5) player->render();
 		 
+
+		Timevec[1].setPosition(glm::vec2(263, 2));
+		Timevec[1].render();
+		Timevec[0].setPosition(glm::vec2(290, 2));
+		Timevec[0].render();
+
+		for (int i = 0; i < 5; ++i) {
+
+			Pointvec[i].setPosition(glm::vec2(550 - i * 25, 2));
+			Pointvec[i].render();
+			
+
+		}
+		
+
+
 		int tileSize = map->getTileSize();
 
 
@@ -426,6 +502,9 @@ void Scene::render()
 		}
 
 		if (bWin) {
+			if (time > 0) {
+				puntuation += time * 10;
+			}
 			winScreen->render();
 		}
 		if (bLost) {
