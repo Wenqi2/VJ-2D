@@ -40,17 +40,25 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+
 	Texture Blocsheet;
 	Sprite* block2;
+
 	Texture Trapsheet;
 	Sprite* trap;
+
 	Texture Backsheet;
 	Sprite* backgound;
+
 	Texture Healthsheet;
 	Sprite* health;
 
+	Texture Levelsheet;
+	Sprite* nivel;
+
 	Texture texWin;
 	Sprite* winScreen;
+
 	Texture texLost;
 	Sprite* gameover;
 
