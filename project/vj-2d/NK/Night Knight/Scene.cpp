@@ -47,7 +47,6 @@ void Scene::init(int level)
 	clockGet = false;
 	doorOpen = false;
 	bMenu = false;
-	godmode = false;
 	time = 99;
 	ScreenPosY = SCREEN_HEIGHT+2;
 	sound.stopBGM();
@@ -241,7 +240,7 @@ void Scene::update(int deltaTime)
 	{
 		//Jump Level & godmode
 		if (Game::instance().getKey('g')) {
-			godmode = !godmode;
+			godmode = true;
 		}
 		else if (Game::instance().getKey('1')) {
 			init(1);
@@ -284,7 +283,7 @@ void Scene::update(int deltaTime)
 
 		currentTime += deltaTime;
 		if (invencibility > 0) invencibility--;
-		if (keyGet ||  hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
+		if ( hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
 
 		}
 		else {
@@ -368,7 +367,7 @@ void Scene::update(int deltaTime)
 		}
 
 
-		if (invencibility <= 0 and map->collisionTrap(player->getposPlayer(), glm::ivec2(32, 32))) {
+		if (invencibility <= 0 and map->collisionTrap(player->getposPlayer(), glm::ivec2(32, 32)) and not godmode) {
 			player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 			hp--;
 			sound.playSFX("sounds/lose_life.mp3");
