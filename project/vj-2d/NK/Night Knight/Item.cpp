@@ -117,7 +117,13 @@ bool Item::collisionItem(const glm::vec2& posPlayer)
 
 void Item::render()
 {
-	sprite->render();
+	if (posItem.x == 0 and posItem.y == 0) {
+
+	}
+	else {
+		sprite->render();
+	}
+
 
 }
 
