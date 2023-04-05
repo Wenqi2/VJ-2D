@@ -156,6 +156,13 @@ void Scene::init(int level)
 	}
 	numbers->changeAnimation(9);
 
+	Levelsheet.loadFromFile("images/nivel.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	nivel = Sprite::createSprite(glm::ivec2(87, 30), glm::vec2(1, 1), &Levelsheet, &texProgram);
+	nivel->setNumberAnimations(1);
+	nivel->setAnimationSpeed(0, 0);
+	nivel->addKeyframe(0, glm::vec2(0.f, 0.f));
+	nivel->changeAnimation(0);
+
 	//inicializando los vectores de sprites de tiempo y puntuación
 	
 	Timevec.push_back(*numbers);
@@ -467,19 +474,24 @@ void Scene::render()
 		else if (invencibility % 10 > 5) player->render();
 		 
 
-		Timevec[1].setPosition(glm::vec2(263, 2));
+		Timevec[1].setPosition(glm::vec2(500, 2));
 		Timevec[1].render();
-		Timevec[0].setPosition(glm::vec2(290, 2));
+		Timevec[0].setPosition(glm::vec2(527, 2));
 		Timevec[0].render();
 
 		for (int i = 0; i < 5; ++i) {
 
-			Pointvec[i].setPosition(glm::vec2(550 - i * 25, 2));
+			Pointvec[i].setPosition(glm::vec2(225 - i * 25, 2));
 			Pointvec[i].render();
 			
 
 		}
 		
+		nivel->setPosition(glm::vec2(270, 2));
+		nivel->render();
+		numbers->setPosition(glm::vec2(360, 2));
+		numbers->changeAnimation(level_scene);
+		numbers->render();
 
 
 		int tileSize = map->getTileSize();
