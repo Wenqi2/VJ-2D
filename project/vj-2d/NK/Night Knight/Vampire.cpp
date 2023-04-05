@@ -14,7 +14,7 @@ enum States {
 void Vampire::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram) {
 
 	spritesheet.loadFromFile("images/Vampire.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(37, 30), glm::vec2(1/20.f,1/8.f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(50,40), glm::vec2(1/20.f,1/8.f), &spritesheet, &shaderProgram);
 	
 	sprite->setNumberAnimations(8);
 
@@ -86,7 +86,7 @@ void Vampire::update(int deltaTime)
 	{
 	case INIT:
 		
-		if (!map->collisionMoveDown(posEnemy, glm::vec2(26,30), &posEnemy.y)) {
+		if (!map->collisionMoveDown(posEnemy, glm::vec2(30,40), &posEnemy.y)) {
 			posEnemy.y++;
 		}
 		else state = VAMPIRE;
@@ -96,16 +96,16 @@ void Vampire::update(int deltaTime)
 	case VAMPIRE:
  		
 
-		if (map->collisionMoveLeft(posEnemy, glm::ivec2(26, 29))) {
+		if (map->collisionMoveLeft(posEnemy, glm::ivec2(30, 40))) {
 			facing = !facing;
 		}
-		else if (map->collisionMoveRight(posEnemy, glm::ivec2(26, 29))) {
+		else if (map->collisionMoveRight(posEnemy, glm::ivec2(40, 40))) {
 			facing = !facing;
 		}
 		
-		if (!map->collisionMoveDown(posEnemy, glm::ivec2(26, 30), &bullshyt)){
+		if (!map->collisionMoveDown(glm::vec2(posEnemy.x + (30*facing - 15*!facing), posEnemy.y), glm::ivec2(30, 40), &bullshyt)){
 		
-				
+	
 				state = BAT_TRANS;
 			
 		}
@@ -117,25 +117,25 @@ void Vampire::update(int deltaTime)
 		transforming = true;
 		Transform();
 		topped = false;
-		if (map->collisionMoveDown(posEnemy, glm::ivec2(26, 30), &bullshyt)) posEnemy.y--;
+		if (map->collisionMoveDown(posEnemy, glm::ivec2(30, 40), &bullshyt)) posEnemy.y--;
 		if (!transforming) state = BAT;
 
 		break;
 	case BAT:
 	
-		if (map->collisionMoveUp(posEnemy, glm::ivec2(26, 30))) topped = true;
+		if (map->collisionMoveUp(posEnemy, glm::ivec2(30, 40))) topped = true;
 
-		else if (map->collisionMoveLeft(glm::vec2(posEnemy.x-1, posEnemy.y), glm::ivec2(26, 29))) {
+		else if (map->collisionMoveLeft(glm::vec2(posEnemy.x-1, posEnemy.y), glm::ivec2(40,40))) {
 			facing = !facing;
 		}
-		else if (map->collisionMoveRight(posEnemy, glm::ivec2(30, 29))) {
+		else if (map->collisionMoveRight(glm::vec2(posEnemy.x + 1, posEnemy.y), glm::ivec2(40, 40))) {
 			facing = !facing;
 		}
-		else if (map->collisionTrap(posEnemy, glm::ivec2(26, 29))) topped = false;
+		else if (map->collisionTrap(posEnemy, glm::ivec2(30, 40))) topped = false;
 		
 
 		Move();
-		if (map->collisionMoveDown(posEnemy, glm::ivec2(26, 30), &bullshyt)) {
+		if (map->collisionMoveDown(glm::vec2(posEnemy.x+10, posEnemy.y), glm::ivec2(30, 40), &bullshyt)) {
 		
 				state = VAMP_TRANS;
 			
@@ -149,7 +149,7 @@ void Vampire::update(int deltaTime)
 		if (!transforming) { 
 				state = VAMPIRE;
 		}
-		while (map->collisionMoveDown(posEnemy, glm::ivec2(26, 30), &bullshyt)) {
+		while (map->collisionMoveDown(posEnemy, glm::ivec2(30, 40), &bullshyt)) {
 			posEnemy.y--;
 		}
 		posEnemy.y++;
@@ -181,7 +181,7 @@ void Vampire::setPosition(const glm::vec2& pos)
 
 bool Vampire::isColliding(glm::vec2 posPlayer) {
 
-	if (map->collisionEnemy(posPlayer, glm::ivec2(14, 28), (posEnemy / 16), glm::ivec2(36, 28))) {
+	if (map->collisionEnemy(posPlayer, glm::ivec2(14, 28), (posEnemy / 16), glm::ivec2(50, 40))) {
 		return true;
 	}
 	return false;

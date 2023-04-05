@@ -101,7 +101,7 @@ void Scene::init(int level)
 		else if (map->enemies[i].enemyType == 'v') {
 			vampire = new Vampire();
 			vampire->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-			vampire->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize() - 18));
+			vampire->setPosition(glm::vec2(map->enemies[i].pos.x * map->getTileSize(), map->enemies[i].pos.y * map->getTileSize() - 28));
 			vampire->setTileMap(map);
 			vampires.push_back(vampire);
 		}
