@@ -88,6 +88,7 @@ private:
 	bool bMenu ;
 	bool bLost;
 	bool bWin;
+	bool lvlwin = false;
 	Menu* menu;
 
 
