@@ -48,6 +48,7 @@ void Scene::init(int level)
 	doorOpen = false;
 	bMenu = false;
 	time = 99;
+	delay_time = 0;
 	ScreenPosY = SCREEN_HEIGHT+2;
 	sound.stopBGM();
 
@@ -241,6 +242,7 @@ void Scene::update(int deltaTime)
 		//Jump Level & godmode
 		if (Game::instance().getKey('g') and currentTime - delay_time >= delay) {
 			godmode = !godmode;
+			cout << godmode << endl;
 			delay_time = currentTime;
 		}
 		else if (Game::instance().getKey('1')) {
@@ -293,36 +295,49 @@ void Scene::update(int deltaTime)
 				sound.resumeBGM();
 			}
 			for (int i = 0; i < skeletons.size(); ++i) {
-
-				if (invencibility <= 0 and skeletons[i]->isColliding(player->getposPlayer()) and not godmode) {
-					sound.playSFX("sounds/lose_life.mp3");
-					hp--;
-					invencibility = 60;
-				}
 				skeletons[i]->update(deltaTime);
 			}
 
 			for (int i = 0; i < vampires.size(); ++i) 
 			{
-
-				if (invencibility <= 0 and vampires[i]->isColliding(player->getposPlayer()) and not godmode) {
-					sound.playSFX("sounds/lose_life.mp3");
-					hp--;
-					invencibility = 60;
-				}
 				vampires[i]->update(deltaTime);
 			}
 			for (int i = 0; i < ghosts.size(); ++i) {
-				if (invencibility <= 0 and ghosts[i]->isColliding(player->getposPlayer()) and not godmode) {
-					sound.playSFX("sounds/lose_life.mp3");
-					hp--;
-					invencibility = 60;
-				}
 				ghosts[i]->update(deltaTime);
 
 			}
 
 		}
+
+		// ---------------COLLISION ENEMY ---------------------------------------------------------
+		for (int i = 0; i < skeletons.size(); ++i) {
+
+			if (invencibility <= 0 and skeletons[i]->isColliding(player->getposPlayer()) and not godmode) {
+				sound.playSFX("sounds/lose_life.mp3");
+				hp--;
+				invencibility = 60;
+			}
+		}
+
+		for (int i = 0; i < vampires.size(); ++i)
+		{
+
+			if (invencibility <= 0 and vampires[i]->isColliding(player->getposPlayer()) and not godmode) {
+				sound.playSFX("sounds/lose_life.mp3");
+				hp--;
+				invencibility = 60;
+			}
+		}
+		for (int i = 0; i < ghosts.size(); ++i) {
+			if (invencibility <= 0 and ghosts[i]->isColliding(player->getposPlayer()) and not godmode) {
+				sound.playSFX("sounds/lose_life.mp3");
+				hp--;
+				invencibility = 60;
+			}
+
+		}
+		// ------------------------------------------------------------------------
+
 		points = puntuation + 25 * (-map->getNblock() + maxblock);
 
 		int temp = points;

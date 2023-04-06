@@ -1,16 +1,1 @@
-﻿  Game.cpp
-  Menu.cpp
-  Player.cpp
-  Scene.cpp
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(220,28): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(231,28): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(296,22): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(306,22): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(316,22): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(389,21): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(417,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(544,21): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(547,21): warning C4018: '<': no coinciden signed/unsigned
-  main.cpp
-  Generando código...
-  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe
+﻿  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe
