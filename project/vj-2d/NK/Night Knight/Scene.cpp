@@ -338,12 +338,14 @@ void Scene::update(int deltaTime)
 				hp--;
 				invencibility = 60;
 			}
-
 		}
 		// ------------------------------------------------------------------------
 
 		points = puntuation + 25 * (-map->getNblock() + maxblock);
-
+		if (lvlwin) {
+			time--;
+			puntuation += 20;
+		}
 		int temp = points;
 		for (int i = 0; i < 5; ++i) {	
 			if (temp >= 0)
@@ -359,13 +361,12 @@ void Scene::update(int deltaTime)
 				
 				if (time == 0) {
 					lvlwin = false;
+					player->bWin = false;
 					init(2);
 				}
 				else {
 					lvlwin = true;
-					time--;
-					puntuation += 20;
-
+					player->bWin = true;
 				}
 			}
 			break;
@@ -373,14 +374,13 @@ void Scene::update(int deltaTime)
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
 				puntuation += 25*maxblock+1000;
 				if (time == 0) {
+					player->bWin = false;
 					lvlwin = false;
 					init(3);
 				}
 				else {
 					lvlwin = true;
-					time--;
-					puntuation += 20;
-
+					player->bWin = true;
 				}
 			}
 			break;
