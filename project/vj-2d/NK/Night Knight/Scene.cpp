@@ -70,16 +70,19 @@ void Scene::init(int level)
 			map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
 			break;
 		case 1:
+			invencibility = 0;
 			map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
 			sound.ChangeVolum(0.3);
 			sound.playBGM("audio/Fungal Funk.mp3", true);
 			break;
 		case 2:
+			invencibility = 0;
 			map = TileMap::createTileMap("levels/level02.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
 			sound.ChangeVolum(0.3);
 			sound.playBGM("audio/Rhythmortis.mp3", true);
 			break;
 		case 3:
+			invencibility = 0;
 			map = TileMap::createTileMap("levels/level03.txt", glm::vec2(SCREEN_X, SCREEN_Y - 32), texProgram);
 			sound.ChangeVolum(0.3);
 			sound.playBGM("audio/Crypteque.mp3", true);
