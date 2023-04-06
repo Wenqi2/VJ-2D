@@ -291,7 +291,6 @@ void Scene::update(int deltaTime)
 			timer--;
 
 			if (hourglassGet and currentTime - actual_time >= 4000) {
-				sound.ChangeVolum(1.0);
 				sound.resumeBGM();
 			}
 			for (int i = 0; i < skeletons.size(); ++i) {
