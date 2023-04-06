@@ -62,6 +62,7 @@ void Scene::init(int level)
 		switch (level_scene)
 		{
 		case 0:
+			godmode = false;
 			initMenu();
 			bMenu = true;
 			bLost = false;

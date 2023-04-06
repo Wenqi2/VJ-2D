@@ -4,6 +4,7 @@
 
 #include "TileMap.h"
 #include "Texture.h"
+#include "SoundManager.h"
 
 class Item {
 
@@ -21,6 +22,7 @@ public:
 	void doorOpen();
 
 private:
+	SoundManager sound;
 	Texture Spritesheet;
 	Sprite* sprite;
 
