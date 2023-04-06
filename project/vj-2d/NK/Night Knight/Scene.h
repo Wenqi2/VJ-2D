@@ -35,6 +35,7 @@ private:
 
 private:
 	SoundManager sound;
+	SoundManager sound2;
 	TileMap *map;
 	Player *player;
 	ShaderProgram texProgram;

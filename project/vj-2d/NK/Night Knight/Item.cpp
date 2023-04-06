@@ -141,5 +141,4 @@ void Item::keyUP()
 void Item::doorOpen()
 {
 	sprite->changeAnimation(1);
-	sound.playSFX("sfx/door_open.wav");
 }
