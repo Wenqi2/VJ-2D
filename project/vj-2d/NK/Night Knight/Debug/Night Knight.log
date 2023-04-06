@@ -1,14 +1,14 @@
 ﻿  Scene.cpp
 E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(225,28): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(236,28): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(301,22): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(305,22): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(309,22): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(317,21): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(326,21): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(335,21): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(407,21): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(436,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(563,21): warning C4018: '<': no coinciden signed/unsigned
-E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(566,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(300,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(304,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(308,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(316,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(325,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(334,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(406,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(435,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(562,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(565,21): warning C4018: '<': no coinciden signed/unsigned
   Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe

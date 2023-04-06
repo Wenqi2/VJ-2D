@@ -356,9 +356,9 @@ void Scene::update(int deltaTime)
 		{
 		case 1:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
-				puntuation += 25*maxblock+1000;
 				
 				if (time == 0) {
+					puntuation += 25 * maxblock + 1000;
 					lvlwin = false;
 					player->bWin = false;
 					init(2);
