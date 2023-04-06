@@ -21,6 +21,7 @@ public:
 	glm::ivec2 getposPlayer();
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
+	bool bWin = false;
 	
 private:
 	SoundManager sound;
