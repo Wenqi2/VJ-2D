@@ -239,8 +239,10 @@ void Scene::update(int deltaTime)
 	else if(delay_start >= 50) 
 	{
 		//Jump Level & godmode
-		if (Game::instance().getKey('g')) {
-			godmode = true;
+		if (Game::instance().getKey('g') and currentTime - delay_time >= delay) {
+			godmode = !godmode;
+			cout << godmode << endl;
+			delay_time = currentTime;
 		}
 		else if (Game::instance().getKey('1')) {
 			init(1);

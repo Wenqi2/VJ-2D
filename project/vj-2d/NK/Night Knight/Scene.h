@@ -91,7 +91,6 @@ private:
 	bool lvlwin = false;
 	Menu* menu;
 
-
 	Skeleton *skeleton;
 	Vampire *vampire;
 	Ghost* ghost;
@@ -110,6 +109,8 @@ private:
 	int level_scene;
 	int delay_start;
 	int ScreenPosY;
+	float delay = 350;
+	float delay_time = 0;
 	
 };
 
