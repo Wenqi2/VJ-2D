@@ -44,6 +44,7 @@ public:
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& size) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY) const;
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size)const;
+	bool collisionMoveUpPlayer(const glm::ivec2& pos, const glm::ivec2& size)const;
 	bool collisionItem(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const;
 	bool collisionTrap(const glm::ivec2& pos, const glm::vec2& size);
 	bool collisionEnemy(const glm::ivec2& posPlayer, const glm::ivec2& sizePlayer, const glm::ivec2& posItem, const glm::ivec2& sizeIteam) const;

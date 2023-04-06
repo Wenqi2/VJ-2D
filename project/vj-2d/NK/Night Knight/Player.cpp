@@ -82,6 +82,8 @@ void Player::update(int deltaTime)
 	
 	if(bJumping)
 	{
+
+		if (map->collisionMoveUpPlayer(posPlayer, glm::ivec2(32, 32))) bJumping = false;
 		jumpAngle += JUMP_ANGLE_STEP;
 		if(jumpAngle == 180)
 		{

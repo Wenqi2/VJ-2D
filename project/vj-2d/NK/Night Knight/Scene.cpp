@@ -283,7 +283,7 @@ void Scene::update(int deltaTime)
 
 		currentTime += deltaTime;
 		if (invencibility > 0) invencibility--;
-		if ( hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
+		if ( hourglassGet and currentTime - actual_time <= 4000 or lvlwin) { // TIME STOP 
 
 		}
 		else {
@@ -324,7 +324,7 @@ void Scene::update(int deltaTime)
 			}
 
 		}
-		points = puntuation + 50 * (-map->getNblock() + maxblock);
+		points = puntuation + 25 * (-map->getNblock() + maxblock);
 
 		int temp = points;
 		for (int i = 0; i < 5; ++i) {	
@@ -337,10 +337,14 @@ void Scene::update(int deltaTime)
 		{
 		case 1:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
-				puntuation += 50*maxblock+1000;
+				puntuation += 25*maxblock+1000;
 				
-				if (time ==  0) init(2);
+				if (time == 0) {
+					lvlwin = false;
+					init(2);
+				}
 				else {
+					lvlwin = true;
 					time--;
 					puntuation += 20;
 
@@ -349,8 +353,17 @@ void Scene::update(int deltaTime)
 			break;
 		case 2:
 			if (door->collisionItem(player->getposPlayer()) && keyGet) {
-				puntuation += 50*maxblock+1000;
-				init(3);
+				puntuation += 25*maxblock+1000;
+				if (time == 0) {
+					lvlwin = false;
+					init(3);
+				}
+				else {
+					lvlwin = true;
+					time--;
+					puntuation += 20;
+
+				}
 			}
 			break;
 		case 3:
@@ -548,7 +561,10 @@ void Scene::render()
 
 void Scene::showscene()
 {
+	puntuation = 0;
+	hp = 3;
 	init(1);
+
 }
 
 void Scene::initShaders()
