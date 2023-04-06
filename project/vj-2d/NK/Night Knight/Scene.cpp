@@ -280,14 +280,12 @@ void Scene::update(int deltaTime)
 			sound.playBGM("audio/lost.mp3", false);
 			bLost = true;
 		}
-
 		currentTime += deltaTime;
 		if (invencibility > 0) invencibility--;
 		if ( hourglassGet and currentTime - actual_time <= 4000) { // TIME STOP 
 
 		}
 		else {
-
 			timer--;
 
 			if (hourglassGet and currentTime - actual_time >= 4000) {
