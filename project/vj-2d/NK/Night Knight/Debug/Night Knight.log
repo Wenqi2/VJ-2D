@@ -1,1 +1,18 @@
-﻿  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe
+﻿  Scene.cpp
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(224,28): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(235,28): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(300,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(304,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(308,22): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(316,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(325,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(334,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(406,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(434,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(561,21): warning C4018: '<': no coinciden signed/unsigned
+E:\proj4\project\vj-2d\NK\Night Knight\Scene.cpp(564,21): warning C4018: '<': no coinciden signed/unsigned
+SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(SOIL.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(stb_image_aug.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+  Night Knight.vcxproj -> E:\proj4\project\vj-2d\NK\Night Knight\Debug\Night Knight.exe

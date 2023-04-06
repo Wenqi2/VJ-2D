@@ -2,16 +2,15 @@ Wenqi Zhou
 Salvador Moya Bartolomé
 
 Funcionalidad:
-Hemos hecho todo lo que poner enunciado por ejemplo:
--la pantalla que sale lentamente
+Hemos hecho todo lo que poner enunciado, por ejemplo:
+-la pantalla que sale de abajo hacia arriba lentamente
 -Animación de los enemigos 
 -efectos de sonido de los objetos 
--Animación de personaje 
 etc.
 
 Instruccions:
 ← → Mover
 ↑ saltar
-g godmode
+g activar o desactivar godmode
 k parecer la llave
 1,2,3 elecionar el nivell
