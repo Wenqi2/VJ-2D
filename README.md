@@ -7,4 +7,4 @@ Instruccions:
 - k parecer la llave
 - 1,2,3 elecionar el nivell
 
-![Image text](https://github.com/Wenqi2/VJ-2D/blob/main/project/vj-2d/NK/Night%20Knight/images/pantalla.png)
+![Image text](project/vj-2d/NK/Night Knight/images/pantalla.png)
